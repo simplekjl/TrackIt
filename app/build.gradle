@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs'
 }
 
 android {
@@ -33,6 +35,7 @@ android {
         jvmTarget = '1.8'
     }
     buildFeatures {
+        viewBinding true
         compose true
     }
     composeOptions {
@@ -47,16 +50,67 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation "androidx.compose.ui:ui:$compose_version"
-    implementation "androidx.compose.material:material:$compose_version"
-    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
-    implementation 'androidx.activity:activity-compose:1.3.1'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
-    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
-    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation project(path: ':domain')
+    implementation project(path: ':data')
+
+    implementation AndroidX.lifecycleRuntime
+    implementation AndroidX.activityCompose
+    implementation AndroidX.appCompat
+    implementation AndroidX.core
+    implementation AndroidX.annotationLib
+    implementation AndroidX.recyclerView
+    implementation AndroidX.cardView
+    implementation AndroidX.constraintLayout
+    implementation AndroidX.activityCompose
+    implementation AndroidX.navigationFragment
+
+    implementation Utils.easyPermissions
+
+    implementation Net.retrofit
+    implementation Net.okHttpLogging
+
+    implementation Google.material
+
+    implementation AndroidLifecycle.viewModel
+    implementation AndroidLifecycle.liveData
+
+    implementation Koin.android
+    implementation Koin.core
+    implementation Koin.compose
+    implementation Koin.workManager
+    implementation Koin.test
+
+    kapt AndroidLifecycle.compiler
+    implementation DebugLib.stetho
+
+
+    implementation Compose.ui
+    implementation Compose.toolingPreview
+    implementation Compose.foundation
+    implementation Compose.material
+    implementation Compose.lifecycleViewModel
+    implementation Compose.runtimeLiveData
+
+    implementation Coroutines.core
+    implementation Coroutines.android
+
+    implementation Net.gsonConverter
+    implementation Net.moshiKotlin
+    implementation ImageLib.glide
+
+    debugImplementation Net.chuckerDebug
+    releaseImplementation Net.chuckerRelease
+
+    debugImplementation Compose.tooling
+
+    testImplementation TestLib.junit
+
+    androidTestImplementation TestLib.androidRunner
+    androidTestImplementation TestLib.androidRules
+    androidTestImplementation TestLib.espressoCore
+
+    androidTestImplementation Compose.testJunit
+    debugImplementation Compose.testManifest
 }

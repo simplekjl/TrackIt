@@ -1,0 +1,4 @@
+feature: ['feature/*', '*/feature/*']
+fix: ['fix/*', '*/fix/*']
+refactor: ['refactor/*', '*/refactor/*']
+translations: _master/crowdin-translations

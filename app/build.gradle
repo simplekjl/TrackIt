@@ -106,6 +106,7 @@ dependencies {
     debugImplementation Compose.tooling
 
     testImplementation TestLib.junit
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     androidTestImplementation TestLib.androidRunner
     androidTestImplementation TestLib.androidRules

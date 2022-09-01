@@ -1,10 +1,10 @@
 object Compose {
 
-    private const val composeVersion = "1.3.0-beta01"
+    private const val composeVersion = "1.2.1"
     private const val lifecycleViewModelVersion = "2.4.1"
     private const val navigationComposeVersion = "2.5.1"
     private const val hiltNavigationComposeVersion = "1.0.0"
-    private const val testComposeVersion = "1.3.0-beta01"
+    private const val testComposeVersion = "1.2.1"
 
     const val ui = "androidx.compose.ui:ui:$composeVersion"
     const val tooling = "androidx.compose.ui:ui-tooling:$composeVersion"

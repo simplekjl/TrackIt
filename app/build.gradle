@@ -83,8 +83,6 @@ dependencies {
     implementation Koin.test
 
     kapt AndroidLifecycle.compiler
-    implementation DebugLib.stetho
-
 
     implementation Compose.ui
     implementation Compose.toolingPreview
@@ -98,7 +96,6 @@ dependencies {
 
     implementation Net.gsonConverter
     implementation Net.moshiKotlin
-    implementation ImageLib.glide
 
     debugImplementation Net.chuckerDebug
     releaseImplementation Net.chuckerRelease

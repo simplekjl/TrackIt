@@ -90,6 +90,7 @@ dependencies {
     implementation Compose.material
     implementation Compose.lifecycleViewModel
     implementation Compose.runtimeLiveData
+    debugImplementation Compose.tooling
 
     implementation Coroutines.core
     implementation Coroutines.android

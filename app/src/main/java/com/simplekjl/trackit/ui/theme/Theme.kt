@@ -51,44 +51,44 @@ internal val LocalShapes = staticCompositionLocalOf { Shapes() }
 
 //theming
 fun lightColors(
-    primary: androidx.compose.ui.graphics.Color = Color.mid_blue,
-    primaryVariant: androidx.compose.ui.graphics.Color = Color.blue,
+    primary: androidx.compose.ui.graphics.Color = TrackItColors.mid_blue,
+    primaryVariant: androidx.compose.ui.graphics.Color = TrackItColors.blue,
     background: androidx.compose.ui.graphics.Color = androidx.compose.ui.graphics.Color.White,
-    secondary: androidx.compose.ui.graphics.Color = Color.gray_4
+    secondary: androidx.compose.ui.graphics.Color = TrackItColors.gray_4
 ): Colors = Colors(
     primary = primary,
     primaryVariant = primaryVariant,
     secondary = secondary,
     secondaryVariant = secondary,
     background = background,
-    surface = Color.white,
-    error = Color.plum,
-    onPrimary = Color.white,
-    onSecondary = Color.black,
-    onBackground = Color.black,
-    onError = Color.black,
-    onSurface = Color.black,
+    surface = TrackItColors.white,
+    error = TrackItColors.plum,
+    onPrimary = TrackItColors.white,
+    onSecondary = TrackItColors.black,
+    onBackground = TrackItColors.black,
+    onError = TrackItColors.black,
+    onSurface = TrackItColors.black,
     isLight = true
 )
 
 // TODO update the black theme colors
 fun darkColors(
-    primary: androidx.compose.ui.graphics.Color = Color.mid_blue,
-    primaryVariant: androidx.compose.ui.graphics.Color = Color.blue,
+    primary: androidx.compose.ui.graphics.Color = TrackItColors.mid_blue,
+    primaryVariant: androidx.compose.ui.graphics.Color = TrackItColors.blue,
     background: androidx.compose.ui.graphics.Color = androidx.compose.ui.graphics.Color.White,
-    secondary: androidx.compose.ui.graphics.Color = Color.gray_4
+    secondary: androidx.compose.ui.graphics.Color = TrackItColors.gray_4
 ): Colors = Colors(
     primary = primary,
     primaryVariant = primaryVariant,
     secondary = secondary,
     secondaryVariant = secondary,
     background = background,
-    surface = Color.white,
-    error = Color.plum,
-    onPrimary = Color.white,
-    onSecondary = Color.white,
-    onBackground = Color.black,
-    onError = Color.black,
-    onSurface = Color.black,
+    surface = TrackItColors.white,
+    error = TrackItColors.plum,
+    onPrimary = TrackItColors.white,
+    onSecondary = TrackItColors.white,
+    onBackground = TrackItColors.black,
+    onError = TrackItColors.black,
+    onSurface = TrackItColors.black,
     isLight = false
 )

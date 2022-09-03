@@ -4,7 +4,7 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 
 @Immutable
-object Color {
+object TrackItColors {
     // Blues
     val dark_blue = Color(0xff18003F)
     val mid_blue = Color(0xff1A0D78)

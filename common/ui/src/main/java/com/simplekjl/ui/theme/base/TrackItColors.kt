@@ -1,4 +1,4 @@
-package com.simplekjl.ui.theme
+package com.simplekjl.ui.theme.base
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color

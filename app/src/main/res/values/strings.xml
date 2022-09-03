@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">TrackIt</string>
     <string name="share">share</string>
+    <string name="menu_settings_action_description">Settings</string>
 </resources>

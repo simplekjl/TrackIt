@@ -3,26 +3,18 @@ package com.simplekjl.trackit
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Call
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.simplekjl.trackit.R.string
 import com.simplekjl.trackit.ui.theme.TrackItTheme
 
 class MainActivity : ComponentActivity() {
@@ -30,7 +22,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TrackItTheme {
-                OverflowMenuTest()
+                MainMenuOverflow()
             }
         }
     }
@@ -40,32 +32,19 @@ class MainActivity : ComponentActivity() {
 @Preview
 @Composable
 fun PreviewOverflowMenu() {
-    OverflowMenuTest()
+    MainMenuOverflow()
 }
 
 @Composable
-fun OverflowMenuTest() {
-    var showMenu by remember { mutableStateOf(false) }
-
+fun MainMenuOverflow() {
     TopAppBar(
-        title = { Text("Track it") },
+        title = { Text(stringResource(id = R.string.app_name)) },
         actions = {
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(Icons.Default.Favorite, contentDescription = "Menu favorites")
-            }
-            IconButton(onClick = { showMenu = !showMenu }) {
-                Icon(Icons.Default.MoreVert, contentDescription = "MEnu more")
-            }
-            DropdownMenu(
-                expanded = showMenu,
-                onDismissRequest = { showMenu = false }
-            ) {
-                DropdownMenuItem(onClick = { /*TODO*/ }) {
-                    Icon(Icons.Filled.Refresh, contentDescription = "refresh")
-                }
-                DropdownMenuItem(onClick = { /*TODO*/ }) {
-                    Icon(Icons.Filled.Call, contentDescription = "call")
-                }
+            IconButton(onClick = { /*TODO jump tp the setting screen*/ }) {
+                Icon(
+                    Icons.Default.Settings,
+                    contentDescription = stringResource(string.menu_settings_action_description)
+                )
             }
         },
         backgroundColor = Color.Transparent,

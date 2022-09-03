@@ -1,4 +1,4 @@
-package com.simplekjl.trackit.ui.theme
+package com.simplekjl.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

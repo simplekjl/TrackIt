@@ -1,4 +1,4 @@
-package com.simplekjl.trackit.ui.theme
+package com.simplekjl.ui.theme
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color

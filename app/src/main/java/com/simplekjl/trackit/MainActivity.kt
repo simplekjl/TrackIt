@@ -14,8 +14,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.simplekjl.trackit.R.string
-import com.simplekjl.trackit.ui.theme.TrackItColors
-import com.simplekjl.trackit.ui.theme.TrackItTheme
+import com.simplekjl.ui.theme.TrackItColors
+import com.simplekjl.ui.theme.TrackItTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +43,7 @@ fun MainMenuOverflow() {
             IconButton(onClick = { /*TODO jump tp the setting screen*/ }) {
                 Icon(
                     Icons.Default.Settings,
+                    tint = TrackItColors.white,
                     contentDescription = stringResource(string.menu_settings_action_description)
                 )
             }

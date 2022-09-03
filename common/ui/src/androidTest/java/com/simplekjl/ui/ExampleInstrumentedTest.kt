@@ -1,4 +1,4 @@
-package com.simplekjl.trackit
+package com.simplekjl.ui
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.simplekjl.trackit", appContext.packageName)
+        assertEquals("com.simplekjl.ui", appContext.packageName)
     }
 }

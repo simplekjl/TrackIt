@@ -10,7 +10,6 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.simplekjl.ui.R
 
-
 val Roboto = FontFamily(
     Font(R.font.roboto_light, FontWeight.Light),
     Font(R.font.roboto_light_italic, FontWeight.Light, FontStyle.Italic),
@@ -25,7 +24,6 @@ val Roboto = FontFamily(
     Font(R.font.roboto_thin, FontWeight.Thin),
     Font(R.font.roboto_thin_italic, FontWeight.Thin, FontStyle.Italic)
 )
-
 
 @Immutable
 data class TrackItTypography(

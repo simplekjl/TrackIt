@@ -47,7 +47,7 @@ internal val LocalTypography = staticCompositionLocalOf { TrackItTypography() }
 
 internal val LocalShapes = staticCompositionLocalOf { Shapes() }
 
-//theming
+// theming
 fun lightColors(
     primary: androidx.compose.ui.graphics.Color = TrackItColors.mid_blue,
     primaryVariant: androidx.compose.ui.graphics.Color = TrackItColors.blue,

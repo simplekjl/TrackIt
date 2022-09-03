@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     id("kotlin-android")
 }
+apply(from = "${rootProject.projectDir}/ktlint.gradle")
 
 android {
     compileSdk = 32
@@ -29,8 +30,8 @@ android {
 
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
         jvmTarget = "1.8"

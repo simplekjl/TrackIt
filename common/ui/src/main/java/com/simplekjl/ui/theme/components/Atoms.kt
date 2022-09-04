@@ -2,9 +2,15 @@ package com.simplekjl.ui.theme.components
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
@@ -14,7 +20,9 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -73,10 +81,13 @@ fun WeightValueElement(
     weightValue: Double,
     colorRes: Color,
     modifier: Modifier = Modifier
-        .size(height = 120.dp, width = 200.dp)
-        .background(TrackItColors.gray_5)
 ) {
-    Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+        modifier = modifier
+            .size(height = 120.dp, width = 200.dp)
+            .background(TrackItColors.gray_5),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Text(
             text = stringResource(id = metricNameRes),
             style = TrackItTypography().h3,
@@ -88,6 +99,49 @@ fun WeightValueElement(
             style = TrackItTypography().h4,
             color = colorRes,
             modifier = Modifier.paddingFromBaseline(top = 24.dp, bottom = 8.dp)
+        )
+    }
+}
+
+@Preview
+@Composable
+fun ColorDescriptionPreview() {
+    TrackItTheme {
+        Column {
+            ColorDescription(
+                descriptionRes = R.string.weight_goal_label,
+                color = TrackItColors.mint
+            )
+            ColorDescription(
+                descriptionRes = R.string.weight_lost_label,
+                color = TrackItColors.cucumber
+            )
+        }
+    }
+}
+
+@Composable
+fun ColorDescription(
+    @StringRes descriptionRes: Int,
+    color: Color,
+    modifier: Modifier = Modifier,
+    shape: Shape = RoundedCornerShape(1.dp)
+) {
+    Row(
+        horizontalArrangement = Arrangement.Center,
+        modifier = modifier
+            .wrapContentWidth()
+    ) {
+        Box(
+            modifier = Modifier
+                .size(12.dp)
+                .clip(shape)
+                .background(color)
+                .align(Alignment.CenterVertically)
+        )
+        Text(
+            text = stringResource(id = descriptionRes),
+            modifier = Modifier.padding(start = 8.dp), style = TrackItTypography().caption
         )
     }
 }

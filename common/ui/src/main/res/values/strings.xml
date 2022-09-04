@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TrackIt</string>
+    <string name="share">share</string>
+    <string name="menu_settings_action_description">Settings</string>
+    <string name="weight_current_label">Current</string>
+    <string name="weight_goal_label">Goal</string>
+    <string name="weight_target_label">Target</string>
+    <string name="weight_lost_label">Lost</string>
+    <string name="weight_gain_label">Gain</string>
+    <string name="weight_changed_label">Changed</string>
+    <!-- Content descriptions -->
+    <string name="menu_setting_content_description">Settings</string>
+</resources>

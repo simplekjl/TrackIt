@@ -5,6 +5,8 @@ plugins {
     id 'androidx.navigation.safeargs'
 }
 
+apply from: "$rootProject.projectDir/ktlint.gradle"
+
 android {
     compileSdk 32
 
@@ -28,11 +30,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = JavaVersion.VERSION_11
     }
     buildFeatures {
         viewBinding true
@@ -54,6 +56,7 @@ dependencies {
 
     implementation project(path: ':domain')
     implementation project(path: ':data')
+    implementation project(path: ':common:ui')
 
     implementation AndroidX.lifecycleRuntime
     implementation AndroidX.activityCompose
@@ -65,8 +68,6 @@ dependencies {
     implementation AndroidX.constraintLayout
     implementation AndroidX.activityCompose
     implementation AndroidX.navigationFragment
-
-    implementation Utils.easyPermissions
 
     implementation Net.retrofit
     implementation Net.okHttpLogging
@@ -83,8 +84,6 @@ dependencies {
     implementation Koin.test
 
     kapt AndroidLifecycle.compiler
-    implementation DebugLib.stetho
-
 
     implementation Compose.ui
     implementation Compose.toolingPreview
@@ -92,21 +91,20 @@ dependencies {
     implementation Compose.material
     implementation Compose.lifecycleViewModel
     implementation Compose.runtimeLiveData
+    debugImplementation Compose.tooling
 
     implementation Coroutines.core
     implementation Coroutines.android
 
     implementation Net.gsonConverter
     implementation Net.moshiKotlin
-    implementation ImageLib.glide
 
     debugImplementation Net.chuckerDebug
     releaseImplementation Net.chuckerRelease
 
-    debugImplementation Compose.tooling
-
     testImplementation TestLib.junit
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'androidx.work:work-runtime-ktx:2.7.1'
 
     androidTestImplementation TestLib.androidRunner
     androidTestImplementation TestLib.androidRules

@@ -1,10 +1,10 @@
 object Compose {
 
-    private const val composeVersion = "1.3.0-beta01"
+    private const val composeVersion = "1.2.1"
     private const val lifecycleViewModelVersion = "2.4.1"
     private const val navigationComposeVersion = "2.5.1"
     private const val hiltNavigationComposeVersion = "1.0.0"
-    private const val testComposeVersion = "1.3.0-beta01"
+    private const val testComposeVersion = "1.2.1"
 
     const val ui = "androidx.compose.ui:ui:$composeVersion"
     const val tooling = "androidx.compose.ui:ui-tooling:$composeVersion"
@@ -14,6 +14,8 @@ object Compose {
     const val lifecycleViewModel =
         "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleViewModelVersion"
     const val runtimeLiveData = "androidx.compose.runtime:runtime-livedata:$composeVersion"
+    const val runtime = "androidx.compose.runtime:runtime:$composeVersion"
+    const val activity = "androidx.activity:activity-compose:$composeVersion"
     const val navigation = "androidx.navigation:navigation-compose:$navigationComposeVersion"
     const val hiltNavigation = "androidx.hilt:hilt-navigation-compose:$hiltNavigationComposeVersion"
     const val testJunit = "androidx.compose.ui:ui-test-junit4:$testComposeVersion"

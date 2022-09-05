@@ -25,7 +25,7 @@ import java.util.Locale
 fun HomeSectionPreview() {
     TrackItTheme {
         HomeSection(title = R.string.app_name) {
-            WeightDetailsSection(modifier = Modifier, currentWeight = 90.0, goalWeight = 65.0)
+            WeightDetailsSection(modifier = Modifier, currentWeight = 80.0, goalWeight = 65.0, startWeight = 90.0)
         }
     }
 }
@@ -55,18 +55,24 @@ fun HomeSection(
 @Composable
 fun WeightDetailsSectionPreview() {
     TrackItTheme {
-        WeightDetailsSection(modifier = Modifier, currentWeight = 74.0, goalWeight = 70.0)
+        WeightDetailsSection(modifier = Modifier, startWeight = 90.0, currentWeight = 74.0, goalWeight = 70.0)
     }
 }
 
 @Composable
 fun WeightDetailsSection(
     modifier: Modifier,
+    startWeight: Double,
     currentWeight: Double,
     goalWeight: Double
 ) {
 
-    Row(modifier = modifier.fillMaxWidth()) {
+    Row(modifier = modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+        WeightValueElement(
+            metricNameRes = R.string.weight_start_label,
+            weightValue = startWeight,
+            colorRes = TrackItColors.banana
+        )
         WeightValueElement(
             metricNameRes = R.string.weight_current_label,
             weightValue = currentWeight,

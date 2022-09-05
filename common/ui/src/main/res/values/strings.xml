@@ -4,6 +4,7 @@
     <string name="share">share</string>
     <string name="menu_settings_action_description">Settings</string>
     <string name="weight_current_label">Current</string>
+    <string name="weight_start_label">Start</string>
     <string name="weight_goal_label">Goal</string>
     <string name="weight_target_label">Target</string>
     <string name="weight_lost_label">Lost</string>

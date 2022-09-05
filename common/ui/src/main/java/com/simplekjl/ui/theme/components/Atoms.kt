@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -78,7 +79,7 @@ fun TrackItMainToolbar(
 @Composable
 fun WeightValueElementTest() {
     TrackItTheme {
-        Row(modifier = Modifier.fillMaxWidth()) {
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
             WeightValueElement(
                 metricNameRes = R.string.weight_current_label,
                 weightValue = 84.0,
@@ -102,21 +103,21 @@ fun WeightValueElement(
 ) {
     Column(
         modifier = modifier
-            .size(height = 120.dp, width = 200.dp)
-            .background(TrackItColors.gray_5),
+            .wrapContentWidth()
+            .wrapContentHeight(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = stringResource(id = metricNameRes),
-            style = TrackItTypography().h3,
-            modifier = Modifier.paddingFromBaseline(top = 24.dp, bottom = 8.dp)
+            style = TrackItTypography().h5,
+            modifier = Modifier.paddingFromBaseline(top = 16.dp)
         )
         // weight
         Text(
             text = weightValue.toString(),
-            style = TrackItTypography().h4,
+            style = TrackItTypography().h6,
             color = colorRes,
-            modifier = Modifier.paddingFromBaseline(top = 24.dp, bottom = 8.dp)
+            modifier = Modifier.paddingFromBaseline(top = 8.dp, bottom = 16.dp)
         )
     }
 }

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
@@ -115,11 +116,12 @@ fun WeightValueElement(
 @Composable
 fun ColorDescriptionPreview() {
     TrackItTheme {
-        Column {
+        Row {
             ColorDescription(
                 descriptionRes = R.string.weight_goal_label,
                 color = TrackItColors.mint
             )
+            Spacer(modifier = Modifier.padding(8.dp))
             ColorDescription(
                 descriptionRes = R.string.weight_lost_label,
                 color = TrackItColors.cucumber
@@ -158,10 +160,14 @@ fun ColorDescription(
 @Composable
 fun LinearChartProgressTest() {
     val entries: MutableList<Entry> = mutableListOf()
-    val c1e1 = Entry(0f, 100000f) // 0 == quarter 1
+    val c1e1 = Entry(0f, 100f) // 0 == quarter 1
     entries.add(c1e1)
-    val c1e2 = Entry(1f, 140000f) // 1 == quarter 2 ...
+    val c1e2 = Entry(1f, 120f) // 1 == quarter 2 ...
     entries.add(c1e2)
+    val c1e3 = Entry(1.2f, 112f) // 1 == quarter 3 ...
+    entries.add(c1e3)
+    val c1e4 = Entry(1.2f, 120f) // 1 == quarter 4 ...
+    entries.add(c1e4)
 
     // ...
     TrackItTheme {
@@ -174,6 +180,7 @@ fun LinearChartProgressTest() {
     }
 }
 
+// TODO do more flexibility to work on the paid version
 @Composable
 fun LinearChartProgress(
     modifier: Modifier = Modifier,

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
@@ -76,11 +77,18 @@ fun MainMenuOverflow(
 @Composable
 fun WeightValueElementTest() {
     TrackItTheme {
-        WeightValueElement(
-            metricNameRes = R.string.weight_current_label,
-            weightValue = 74.0,
-            colorRes = TrackItColors.plum
-        )
+        Row(modifier = Modifier.fillMaxWidth()) {
+            WeightValueElement(
+                metricNameRes = R.string.weight_current_label,
+                weightValue = 84.0,
+                colorRes = TrackItColors.plum
+            )
+            WeightValueElement(
+                metricNameRes = R.string.weight_goal_label,
+                weightValue = 74.0,
+                colorRes = TrackItColors.cucumber
+            )
+        }
     }
 }
 

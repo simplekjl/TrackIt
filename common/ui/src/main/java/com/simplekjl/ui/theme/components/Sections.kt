@@ -71,7 +71,7 @@ fun WeightDetailsSection(
         WeightValueElement(
             metricNameRes = R.string.weight_start_label,
             weightValue = startWeight,
-            colorRes = TrackItColors.banana
+            colorRes = TrackItColors.mid_blue
         )
         WeightValueElement(
             metricNameRes = R.string.weight_current_label,

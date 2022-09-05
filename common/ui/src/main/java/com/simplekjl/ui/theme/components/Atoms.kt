@@ -170,7 +170,7 @@ fun ColorDescription(
     modifier: Modifier = Modifier,
     @StringRes descriptionRes: Int,
     color: Color,
-    shape: Shape = RoundedCornerShape(1.dp)
+    shape: Shape = RoundedCornerShape(2.dp)
 ) {
     Row(
         horizontalArrangement = Arrangement.Center,

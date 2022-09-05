@@ -49,26 +49,26 @@ fun HomeScreenPReview() {
 
 @Composable
 fun HomeScreen(
-        modifier: Modifier = Modifier,
-        startWeight: Double,
-        currentWeight: Double,
-        goalWeight: Double
+    modifier: Modifier = Modifier,
+    startWeight: Double,
+    currentWeight: Double,
+    goalWeight: Double
 ) {
     Scaffold(
-            topBar = {
-                TrackItMainToolbar(
-                        titleRes = R.string.app_name,
-                        menuSettingsDescRes = R.string.menu_settings_action_description
-                )
-            },
-            modifier = modifier.fillMaxSize(),
-            floatingActionButton = { AddDeleteFabButton(onClick = {}) }
+        topBar = {
+            TrackItMainToolbar(
+                titleRes = R.string.app_name,
+                menuSettingsDescRes = R.string.menu_settings_action_description
+            )
+        },
+        modifier = modifier.fillMaxSize(),
+        floatingActionButton = { AddDeleteFabButton(onClick = {}) }
     ) { paddingValues ->
         Column(
-                modifier
-                        .verticalScroll(rememberScrollState())
-                        .wrapContentHeight()
-                        .padding(top = paddingValues.calculateTopPadding(), start = 16.dp, end = 16.dp, bottom = 8.dp)
+            modifier
+                .verticalScroll(rememberScrollState())
+                .wrapContentHeight()
+                .padding(top = paddingValues.calculateTopPadding(), start = 16.dp, end = 16.dp, bottom = 8.dp)
         ) {
             Spacer(modifier = Modifier.height(16.dp))
             HomeSection(title = null) {
@@ -81,12 +81,12 @@ fun HomeScreen(
             Spacer(modifier = Modifier.height(16.dp))
             HomeSection(title = null) {
                 LinearChartProgress(
-                        modifier = Modifier
-                                .fillMaxWidth()
-                                .height(500.dp),
-                        weightValues = SampleData.entries,
-                        topLimitLabel = com.simplekjl.ui.R.string.weight_progress_label,
-                        bottomLimitLabel = com.simplekjl.ui.R.string.weight_progress_label, lineColor = TrackItColors.cucumber
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(500.dp),
+                    weightValues = SampleData.entries,
+                    topLimitLabel = com.simplekjl.ui.R.string.weight_progress_label,
+                    bottomLimitLabel = com.simplekjl.ui.R.string.weight_progress_label, lineColor = TrackItColors.cucumber
                 )
             }
         }

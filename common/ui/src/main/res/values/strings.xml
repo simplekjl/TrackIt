@@ -14,4 +14,5 @@
     <string name="weight_label" tools:ignore="ExtraTranslation">weight</string>
     <!-- Content descriptions -->
     <string name="menu_setting_content_description">Settings</string>
+    <string name="weight_add_new_measurement">Add new weight measurement</string>
 </resources>

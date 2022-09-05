@@ -15,11 +15,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -42,6 +44,29 @@ import com.simplekjl.ui.theme.SampleData
 import com.simplekjl.ui.theme.base.TrackItColors
 import com.simplekjl.ui.theme.base.TrackItTheme
 import com.simplekjl.ui.theme.base.TrackItTypography
+
+@Preview
+@Composable
+fun AddDeleteFabButtonPreview() {
+    TrackItTheme {
+        AddDeleteFabButton(onClick = {})
+    }
+}
+
+@Composable
+fun AddDeleteFabButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
+    FloatingActionButton(
+        onClick = onClick,
+        backgroundColor = TrackItColors.blue,
+        content = {
+            Icon(
+                Icons.Filled.Add,
+                contentDescription = null,
+                tint = Color.White
+            )
+        }
+    )
+}
 
 @Preview
 @Composable

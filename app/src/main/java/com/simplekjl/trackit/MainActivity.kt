@@ -20,12 +20,12 @@ import androidx.compose.ui.unit.dp
 import com.simplekjl.ui.theme.SampleData
 import com.simplekjl.ui.theme.base.TrackItColors
 import com.simplekjl.ui.theme.base.TrackItTheme
+import com.simplekjl.ui.theme.components.AddDeleteFabButton
 import com.simplekjl.ui.theme.components.ColorChartSection
 import com.simplekjl.ui.theme.components.HomeSection
 import com.simplekjl.ui.theme.components.LinearChartProgress
 import com.simplekjl.ui.theme.components.TrackItMainToolbar
 import com.simplekjl.ui.theme.components.WeightDetailsSection
-
 
 class MainActivity : ComponentActivity() {
 
@@ -37,7 +37,6 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
 }
 
 @Preview
@@ -55,12 +54,16 @@ fun HomeScreen(
         currentWeight: Double,
         goalWeight: Double
 ) {
-    Scaffold(topBar = {
-        TrackItMainToolbar(
-                titleRes = R.string.app_name,
-                menuSettingsDescRes = R.string.menu_settings_action_description
-        )
-    }, modifier = modifier.fillMaxSize()) { paddingValues ->
+    Scaffold(
+            topBar = {
+                TrackItMainToolbar(
+                        titleRes = R.string.app_name,
+                        menuSettingsDescRes = R.string.menu_settings_action_description
+                )
+            },
+            modifier = modifier.fillMaxSize(),
+            floatingActionButton = { AddDeleteFabButton(onClick = {}) }
+    ) { paddingValues ->
         Column(
                 modifier
                         .verticalScroll(rememberScrollState())
@@ -90,4 +93,3 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(16.dp))
     }
 }
-    

@@ -7,8 +7,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
@@ -37,6 +37,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.simplekjl.ui.R
+import com.simplekjl.ui.theme.SampleData
 import com.simplekjl.ui.theme.base.TrackItColors
 import com.simplekjl.ui.theme.base.TrackItTheme
 import com.simplekjl.ui.theme.base.TrackItTypography
@@ -45,12 +46,12 @@ import com.simplekjl.ui.theme.base.TrackItTypography
 @Composable
 fun PreviewOverflowMenu() {
     TrackItTheme {
-        MainMenuOverflow(R.string.app_name, R.string.menu_setting_content_description)
+        TrackItMainToolbar(R.string.app_name, R.string.menu_setting_content_description)
     }
 }
 
 @Composable
-fun MainMenuOverflow(
+fun TrackItMainToolbar(
     @StringRes titleRes: Int,
     @StringRes menuSettingsDescRes: Int,
     modifier: Modifier = Modifier
@@ -167,23 +168,17 @@ fun ColorDescription(
 @Preview
 @Composable
 fun LinearChartProgressTest() {
-    val entries: MutableList<Entry> = mutableListOf()
-    val c1e1 = Entry(0f, 100f) // 0 == quarter 1
-    entries.add(c1e1)
-    val c1e2 = Entry(1f, 120f) // 1 == quarter 2 ...
-    entries.add(c1e2)
-    val c1e3 = Entry(1.2f, 112f) // 1 == quarter 3 ...
-    entries.add(c1e3)
-    val c1e4 = Entry(1.2f, 120f) // 1 == quarter 4 ...
-    entries.add(c1e4)
 
     // ...
     TrackItTheme {
         LinearChartProgress(
-            weightValues = entries,
+            weightValues = SampleData.entries,
             topLimitLabel = R.string.app_name,
-            bottomLimitLabel = R.string.weight_target_label,
-            lineColor = TrackItColors.mint
+            bottomLimitLabel = R.string.weight_progress_label,
+            lineColor = TrackItColors.mint,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(400.dp)
         )
     }
 }
@@ -200,7 +195,7 @@ fun LinearChartProgress(
     val topLabel = stringResource(id = topLimitLabel)
     val bottomLabel = stringResource(id = bottomLimitLabel)
     AndroidView(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier,
         factory = { context -> LineChart(context) },
         update = { linearChart ->
             val dataSet = LineDataSet(weightValues, topLabel).apply {

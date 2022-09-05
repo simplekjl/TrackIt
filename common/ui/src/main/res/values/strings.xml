@@ -9,6 +9,7 @@
     <string name="weight_lost_label">Lost</string>
     <string name="weight_gain_label">Gain</string>
     <string name="weight_changed_label">Changed</string>
+    <string name="weight_progress_label">Progress</string>
     <string name="weight_label" tools:ignore="ExtraTranslation">weight</string>
     <!-- Content descriptions -->
     <string name="menu_setting_content_description">Settings</string>

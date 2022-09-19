@@ -2,22 +2,22 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
-    id 'androidx.navigation.safeargs'
 }
 
 apply from: "$rootProject.projectDir/ktlint.gradle"
+apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdk 32
+    compileSdk Configs.compilation
 
     defaultConfig {
-        applicationId "com.simplekjl.trackit"
-        minSdk 23
-        targetSdk 32
+        applicationId Configs.applicationId
+        minSdk Configs.minSdk
+        targetSdk Configs.target
         versionCode 1
         versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "DB_NAME", Configs.db_name
+        testInstrumentationRunner Configs.testRunner
         vectorDrawables {
             useSupportLibrary true
         }
@@ -41,75 +41,104 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_version
+        kotlinCompilerExtensionVersion Configs.composeVersion
     }
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+    configurations {
+        cleanedAnnotations
+        all*.exclude group: 'com.google.guava', module: 'listenablefuture'
+    }
 }
 
 dependencies {
-
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // common classes for testing
+    implementation project(':data')
+    implementation project(':domain')
+    implementation project(':common:ui')
+    testImplementation project(':testshared')
 
-    implementation project(path: ':domain')
-    implementation project(path: ':data')
-    implementation project(path: ':common:ui')
+    // Kotlin
+    implementation JetbrainsLibraries.kotlin
+    implementation JetbrainsLibraries.coroutinesCore
+    implementation JetbrainsLibraries.coroutinesAndroid
 
-    implementation AndroidX.lifecycleRuntime
-    implementation AndroidX.activityCompose
-    implementation AndroidX.appCompat
-    implementation AndroidX.core
-    implementation AndroidX.annotationLib
-    implementation AndroidX.recyclerView
-    implementation AndroidX.cardView
-    implementation AndroidX.constraintLayout
-    implementation AndroidX.activityCompose
-    implementation AndroidX.navigationFragment
+    // Koin
+    implementation KoinLibraries.core
+    implementation KoinLibraries.android
+    implementation KoinLibraries.compose
 
-    implementation Net.retrofit
-    implementation Net.okHttpLogging
+    // Google
+    implementation GoogleLibraries.material
 
-    implementation Google.material
+    // Androidx
+    implementation AndroidxLibraries.core
+    implementation AndroidxLibraries.collection
+    implementation AndroidxLibraries.dynamicAnimation
+    implementation AndroidxLibraries.navigationUI
+    implementation AndroidxLibraries.navigationFragment
+    implementation AndroidxLibraries.activityKtx
+    implementation AndroidxLibraries.fragmentKtx
 
-    implementation AndroidLifecycle.viewModel
-    implementation AndroidLifecycle.liveData
+    // AndroidX Lifecycle
+    implementation LifecyleLibraries.viewModel
+    implementation LifecyleLibraries.runtime
+    implementation LifecyleLibraries.liveData
+    implementation LifecyleLibraries.process
 
-    implementation Koin.android
-    implementation Koin.core
-    implementation Koin.compose
-    implementation Koin.workManager
-    implementation Koin.test
+    //run-time live data
+    implementation ComposeLibraries.runtimeLiveData
+    implementation ComposeLibraries.ui
+    // Tooling support (Previews, etc.)
+    implementation ComposeLibraries.uiTooling
+    // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
+    implementation ComposeLibraries.foundation
+    // Material Design
+    implementation ComposeLibraries.material
+    // Navigation
+    implementation ComposeLibraries.navigation
+    implementation ComposeLibraries.runtime
+    // chart
+    implementation Libraries.MPchart
+    // Room
+    implementation Room.runtime
+    implementation Room.test
+    kapt Room.compiler
 
-    kapt AndroidLifecycle.compiler
+    // Used for displaying Preview
+    implementation ComposeLibraries.activity
+    implementation Libraries.fixture
+    implementation 'androidx.navigation:navigation-testing:2.5.2'
 
-    implementation Compose.ui
-    implementation Compose.toolingPreview
-    implementation Compose.foundation
-    implementation Compose.material
-    implementation Compose.lifecycleViewModel
-    implementation Compose.runtimeLiveData
-    debugImplementation Compose.tooling
+    androidTestImplementation ComposeLibraries.uiTestJunit4
+    testImplementation ComposeLibraries.uiTestJunit4
+    debugImplementation ComposeLibraries.uiTest
 
-    implementation Coroutines.core
-    implementation Coroutines.android
+    testImplementation Libraries.robolectric
+    androidTestImplementation AndroidxTestLibraries.testRunner
+    androidTestImplementation AndroidxTestLibraries.core
+    androidTestImplementation AndroidxTestLibraries.archCoreTest
 
-    implementation Net.gsonConverter
-    implementation Net.moshiKotlin
+    // need this for android instrumentation tests run
+    androidTestImplementation ComposeLibraries.activity
 
-    debugImplementation Net.chuckerDebug
-    releaseImplementation Net.chuckerRelease
+    testImplementation AndroidxTestLibraries.archCoreTest
+    testImplementation AndroidxTestLibraries.core
+    testImplementation AndroidxTestLibraries.testJunit
+    testImplementation AndroidxTestLibraries.testRules
+    testImplementation MockkLibraries.mockk
+    testImplementation MockkLibraries.mockkAndroid
+    testImplementation GoogleLibraries.truth
+    androidTestImplementation GoogleLibraries.truth
 
-    testImplementation TestLib.junit
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-    implementation 'androidx.work:work-runtime-ktx:2.7.1'
+    testImplementation Libraries.robolectric
 
-    androidTestImplementation TestLib.androidRunner
-    androidTestImplementation TestLib.androidRules
-    androidTestImplementation TestLib.espressoCore
-
-    androidTestImplementation Compose.testJunit
-    debugImplementation Compose.testManifest
+    debugApi "androidx.customview:customview:1.2.0-alpha01"
+    debugApi "androidx.customview:customview-poolingcontainer:1.0.0"
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.17.0"
+    implementation "com.google.accompanist:accompanist-swiperefresh:0.26.3-beta"
 }

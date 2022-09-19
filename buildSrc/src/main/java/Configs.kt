@@ -1,11 +1,10 @@
 object Configs {
+    const val compilation = 33
+    const val applicationId = "com.simplekjl.trackit"
+    const val minSdk = 26
+    const val target = 33
+    const val testRunner = "androidx.test.runner.AndroidJUnitRunner"
+    const val composeVersion = "1.3.0"
 
-    const val compileSdkVersion = 31
-    const val minSdkVersion = 21
-    const val targetSdkVersion = 30
-    const val buildToolsVersion = "30.0.3"
-
-    // services
-    const val url_flickr : String = "\"https://api.flickr.com/services/rest/\""
-
+    const val db_name : String = "\"weight_db\""
 }

@@ -8,15 +8,15 @@ plugins {
 apply from: "$rootProject.projectDir/ktlint.gradle"
 
 android {
-    compileSdk 32
+    compileSdk Configs.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.simplekjl.trackit"
-        minSdk 23
-        targetSdk 32
+        applicationId Configs.applicationId
+        minSdk Configs.minSdkVersion
+        targetSdk Configs.targetSdkVersion
         versionCode 1
         versionName "1.0"
-
+        buildConfigField "String", "DB_NAME", Configs.db_name
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
@@ -48,6 +48,10 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+    configurations {
+        cleanedAnnotations
+        implementation.exclude group: 'org.jetbrains' , module:'annotations'
+    }
 }
 
 dependencies {
@@ -68,6 +72,10 @@ dependencies {
     implementation AndroidX.constraintLayout
     implementation AndroidX.activityCompose
     implementation AndroidX.navigationFragment
+
+    implementation Room.paging
+    implementation Room.compiler
+    implementation Room.runtime
 
     implementation Net.retrofit
     implementation Net.okHttpLogging

@@ -1,11 +1,12 @@
 object Configs {
 
-    const val compileSdkVersion = 31
-    const val minSdkVersion = 21
-    const val targetSdkVersion = 30
+    const val compileSdkVersion = 32
+    const val minSdkVersion = 23
+    const val targetSdkVersion = 32
     const val buildToolsVersion = "30.0.3"
+    const val applicationId = "com.simplekjl.trackit"
 
-    // services
-    const val url_flickr : String = "\"https://api.flickr.com/services/rest/\""
+    // DB name
+    const val db_name = "\"weight_db\""
 
 }

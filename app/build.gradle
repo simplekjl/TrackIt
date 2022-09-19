@@ -5,6 +5,7 @@ plugins {
 }
 
 apply from: "$rootProject.projectDir/ktlint.gradle"
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdk Configs.compilation
@@ -49,7 +50,6 @@ android {
     }
     configurations {
         cleanedAnnotations
-        implementation.exclude group: 'org.jetbrains', module: 'annotations'
         all*.exclude group: 'com.google.guava', module: 'listenablefuture'
     }
 }
@@ -107,6 +107,7 @@ dependencies {
     // Room
     implementation Room.runtime
     implementation Room.test
+    kapt Room.compiler
 
     // Used for displaying Preview
     implementation ComposeLibraries.activity
@@ -118,6 +119,9 @@ dependencies {
     debugImplementation ComposeLibraries.uiTest
 
     testImplementation Libraries.robolectric
+    androidTestImplementation AndroidxTestLibraries.testRunner
+    androidTestImplementation AndroidxTestLibraries.core
+    androidTestImplementation AndroidxTestLibraries.archCoreTest
 
     // need this for android instrumentation tests run
     androidTestImplementation ComposeLibraries.activity
@@ -128,6 +132,8 @@ dependencies {
     testImplementation AndroidxTestLibraries.testRules
     testImplementation MockkLibraries.mockk
     testImplementation MockkLibraries.mockkAndroid
+    testImplementation GoogleLibraries.truth
+    androidTestImplementation GoogleLibraries.truth
 
     testImplementation Libraries.robolectric
 

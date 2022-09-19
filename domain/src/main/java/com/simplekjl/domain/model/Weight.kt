@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "weight")
 data class Weight(
     @PrimaryKey val uid: Int,
     @ColumnInfo(name = "date") val date: Long,

@@ -50,7 +50,7 @@ android {
     }
     configurations {
         cleanedAnnotations
-        implementation.exclude group: 'org.jetbrains' , module:'annotations'
+        implementation.exclude group: 'org.jetbrains', module: 'annotations'
     }
 }
 
@@ -76,6 +76,7 @@ dependencies {
     implementation Room.paging
     implementation Room.compiler
     implementation Room.runtime
+    implementation Room.test
 
     implementation Net.retrofit
     implementation Net.okHttpLogging
@@ -111,8 +112,7 @@ dependencies {
     releaseImplementation Net.chuckerRelease
 
     testImplementation TestLib.junit
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-    implementation 'androidx.work:work-runtime-ktx:2.7.1'
+    implementation External.MPchart
 
     androidTestImplementation TestLib.androidRunner
     androidTestImplementation TestLib.androidRules

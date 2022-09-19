@@ -1,70 +1,46 @@
-plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
-    id 'androidx.navigation.safeargs'
-}
-
-apply from: "$rootProject.projectDir/ktlint.gradle"
-
+apply from: "$rootProject.projectDir/common-library.gradle"
+apply plugin: 'kotlin-parcelize'
 android {
-    compileSdk 32
-
-    defaultConfig {
-        minSdk 23
-        targetSdk 32
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary true
-        }
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11
-    }
     buildFeatures {
-        viewBinding true
         compose true
     }
+
     composeOptions {
-        kotlinCompilerExtensionVersion compose_version
+        kotlinCompilerExtensionVersion Configs.composeVersion
     }
+
     packagingOptions {
-        resources {
-            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        exclude 'META-INF/AL2.0'
+        exclude 'META-INF/LGPL2.1'
+        exclude 'META-INF/*.kotlin_module'
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
         }
     }
 }
-
 dependencies {
+    implementation project(':domain')
+    testImplementation project(':testshared')
 
-    api AndroidX.activityCompose
-    api Compose.ui
-    api Compose.toolingPreview
-    api Compose.activity
-    api Compose.foundation
-    api Compose.material
-    api Compose.lifecycleViewModel
-    api Compose.runtimeLiveData
-    debugApi Compose.tooling
-    // Added because there is an issue in 1.2.0 for these classes
-    debugApi "androidx.customview:customview:1.2.0-alpha01"
-    debugApi "androidx.customview:customview-poolingcontainer:1.0.0"
+    api ComposeLibraries.ui
+    // Tooling support (Previews, etc.)
+    api ComposeLibraries.uiTooling
+    // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
+    api ComposeLibraries.foundation
+    // Material Design
+    api ComposeLibraries.material
 
-    api 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-    api 'androidx.work:work-runtime-ktx:2.7.1'
+    // Used for displaying Preview
+    api ComposeLibraries.activity
+
+    api Libraries.MPchart
+    androidTestImplementation ComposeLibraries.uiTestJunit4
+    testImplementation ComposeLibraries.uiTestJunit4
+    debugImplementation ComposeLibraries.uiTest
+
+    testImplementation Libraries.robolectric
 
 }

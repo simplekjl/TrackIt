@@ -1,12 +1,10 @@
 object Configs {
-
-    const val compileSdkVersion = 32
-    const val minSdkVersion = 23
-    const val targetSdkVersion = 32
-    const val buildToolsVersion = "30.0.3"
+    const val compilation = 33
     const val applicationId = "com.simplekjl.trackit"
+    const val minSdk = 26
+    const val target = 33
+    const val testRunner = "androidx.test.runner.AndroidJUnitRunner"
+    const val composeVersion = "1.3.1"
 
-    // DB name
-    const val db_name = "\"weight_db\""
-
+    const val db_name : String = "\"weight_db\""
 }

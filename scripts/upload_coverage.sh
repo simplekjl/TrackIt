@@ -27,4 +27,4 @@ done
 # Print code coverage percentage
 sed "24q;d" 'coverage/codeclimate.json'
 
-./cc-test-reporter upload-coverage -r "${CC_TEST_REPORTER_ID}"
+./cc-test-reporter upload-coverage -r "${3b545cb2bd8e831b401989bb763447278bb2218a734b34304142f87fae2d4e78}"

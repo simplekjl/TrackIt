@@ -56,6 +56,7 @@ fun AddDeleteFabButtonPreview() {
 @Composable
 fun AddDeleteFabButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
     FloatingActionButton(
+        modifier = modifier,
         onClick = onClick,
         backgroundColor = TrackItColors.blue,
         content = {
@@ -219,7 +220,7 @@ fun LinearChartProgress(
     lineColor: Color,
 ) {
     val topLabel = stringResource(id = topLimitLabel)
-    val bottomLabel = stringResource(id = bottomLimitLabel)
+//    val bottomLabel = stringResource(id = bottomLimitLabel)
     AndroidView(
         modifier = modifier,
         factory = { context -> LineChart(context) },

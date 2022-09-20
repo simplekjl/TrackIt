@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "weight", primaryKeys = ["uid", "date"])
+@Entity(tableName = "weight")
 data class Weight(
     @PrimaryKey(autoGenerate = true) val uid: Int,
     @ColumnInfo(name = "date") val date: Long,
@@ -15,7 +15,7 @@ data class Weight(
 // User should be able to also create measurements without tracking weight
 @Entity(primaryKeys = ["entryUid", "date"])
 data class Measures(
-    @PrimaryKey val entryUid: Int,
+    val entryUid: Int,
     val date: Long,
     val chest: Double,
     val leftArm: Double,

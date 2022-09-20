@@ -7,10 +7,12 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.room.Update
+import com.simplekjl.domain.model.Measures
 import com.simplekjl.domain.model.Weight
 import com.simplekjl.trackit.framework.converters.Converters
 
-@Database(entities = [Weight::class], version = 1, exportSchema = true)
+@Database(entities = [Weight::class, Measures::class], version = 1, exportSchema = true)
 @TypeConverters(Converters::class)
 abstract class WeightDatabase : RoomDatabase() {
 
@@ -20,14 +22,38 @@ abstract class WeightDatabase : RoomDatabase() {
 @Dao
 interface WeightDao {
     @Query("SELECT * FROM weight")
-    fun getAll(): List<Weight>
+    fun getAllWeights(): List<Weight>
 
-    @Query("SELECT * FROM weight WHERE date IS :uid")
-    fun findByDate(uid: Long): Weight
+    @Query("SELECT * FROM weight WHERE date BETWEEN :startDate AND :endDate")
+    fun getAllWeightsFromTo(startDate: Long?, endDate: Long?): Int
+
+    @Query("SELECT * FROM weight WHERE date IS :date")
+    fun findWeightByDate(date: Long): Weight
 
     @Insert
-    fun insertAll(vararg weights: Weight)
+    fun insertAllWeights(vararg weights: Weight)
 
     @Delete
-    fun delete(weight: Weight)
+    fun deleteWeight(weight: Weight)
+
+    @Update
+    fun updateWeight(weight: Weight)
+
+    @Query("SELECT * FROM measures")
+    fun getAllMeasures(): List<Measures>
+
+    @Query("SELECT * FROM measures WHERE date IS :date")
+    fun getMeasureByDate(date: Long): Measures
+
+    @Query("SELECT * FROM measures WHERE date BETWEEN :startDate AND :endDate")
+    fun getAllMeasurementsFromTo(startDate: Long?, endDate: Long?): Int
+
+    @Insert
+    fun insertAllMeasures(vararg measures: Measures)
+
+    @Delete
+    fun deleteMeasure(measures: Measures)
+
+    @Update
+    fun updateMeasure(measures: Measures)
 }

@@ -23,6 +23,8 @@ android {
         multiDexEnabled true
         buildConfigField "String", "DB_NAME", Configs.db_name
         testInstrumentationRunner Configs.testRunner
+
+        testInstrumentationRunnerArguments clearPackageData: 'true'
         vectorDrawables {
             useSupportLibrary true
         }

@@ -14,18 +14,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  auto-assign:
-    runs-on: ubuntu-latest
-    if: github.head_ref != '_master/crowdin-translations' &&  github.head_ref != '_master/update-schema'
-    steps:
-      - uses: kentaro-m/auto-assign-action@v1.2.0
-        with:
-          configuration-path: .github/auto_assign_config.yml
-
-  auto-approve:
-    if: github.head_ref == '_master/crowdin-translations'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: hmarr/auto-approve-action@v2
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"

@@ -5,6 +5,7 @@ plugins {
 }
 
 apply from: "$rootProject.projectDir/ktlint.gradle"
+apply from: "$rootProject.projectDir/coverage-android.gradle"
 apply plugin: 'kotlin-kapt'
 
 android {
@@ -12,12 +13,18 @@ android {
 
     defaultConfig {
         applicationId Configs.applicationId
-        minSdk Configs.minSdk
-        targetSdk Configs.target
-        versionCode 1
-        versionName "1.0"
+
+        minSdkVersion Configs.minSdk
+        targetSdkVersion Configs.target
+
+        versionCode project.VERSION_CODE.toInteger()
+        versionName project.VERSION_NAME
+
+        multiDexEnabled true
         buildConfigField "String", "DB_NAME", Configs.db_name
         testInstrumentationRunner Configs.testRunner
+
+        testInstrumentationRunnerArguments clearPackageData: 'true'
         vectorDrawables {
             useSupportLibrary true
         }
@@ -29,7 +36,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    testOptions {
+        animationsDisabled true
+        unitTests.includeAndroidResources = true
+    }
+
     compileOptions {
+        // Flag to enable support for the new language APIs
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
@@ -44,9 +59,9 @@ android {
         kotlinCompilerExtensionVersion Configs.composeVersion
     }
     packagingOptions {
-        resources {
-            excludes += '/META-INF/{AL2.0,LGPL2.1}'
-        }
+        exclude 'META-INF/AL2.0'
+        exclude 'META-INF/LGPL2.1'
+        exclude 'META-INF/*.kotlin_module'
     }
     configurations {
         cleanedAnnotations
@@ -136,6 +151,8 @@ dependencies {
     androidTestImplementation GoogleLibraries.truth
 
     testImplementation Libraries.robolectric
+
+    coreLibraryDesugaring Libraries.desugarJdkLibs
 
     debugApi "androidx.customview:customview:1.2.0-alpha01"
     debugApi "androidx.customview:customview-poolingcontainer:1.0.0"

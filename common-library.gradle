@@ -4,16 +4,16 @@ apply plugin: 'kotlin-android'
 apply from: "$rootProject.projectDir/ktlint.gradle"
 
 android {
-    compileSdkVersion 33
+    compileSdkVersion Configs.compilation
 
     defaultConfig {
-        minSdkVersion 23
-        targetSdkVersion 33
+        minSdkVersion Configs.minSdk
+        targetSdkVersion Configs.target
         versionCode 1
         versionName "1.0"
 
         vectorDrawables.useSupportLibrary = true
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner Configs.testRunner
     }
 
     buildTypes {
@@ -54,5 +54,7 @@ dependencies {
     testImplementation MockkLibraries.mockk
     testImplementation GoogleLibraries.truth
     testImplementation JetbrainsLibraries.coroutinesTest
+
+    coreLibraryDesugaring Libraries.desugarJdkLibs
 
 }

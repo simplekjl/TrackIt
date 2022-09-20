@@ -1,0 +1,90 @@
+apply plugin: 'jacoco'
+
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+    jacoco.excludes = ['jdk.internal.*']
+}
+
+project.afterEvaluate {
+
+    task coverageReport(type: JacocoReport, dependsOn: "testQaUnitTest") {
+        group = "Reporting"
+        description = "Generate Jacoco coverage reports on Android libraries build."
+
+        def fileFilter = [
+                '**/R.class',
+                '**/R$*.class',
+                '**/$*.*',
+                '**/*$*.*',
+                '**/*Creator*',
+                '**/DataBindingInfo.*',
+                '**/DataBinderMapperImpl*',
+                '**/BuildConfig.*',
+                '**/Manifest*.*',
+                '**/*Test*.*',
+                'android/**/*.*',
+                'androidx/**/*.*',
+                '**/databinding/**/*.*',
+                '**/*App.*',
+                '**/*Component.*',
+                '**/*Module.*',
+                '**/*Activity.*',
+                '**/*ActivityKt.*',
+                '**/*Adapter.*',
+                '**/*AdapterKt.*',
+                '**/*Dialog.*',
+                '**/*DialogKt.*',
+                '**/*ViewHolder.*',
+                '**/*ItemDecoration.*',
+                '**/*ViewHolderKt.*',
+                '**/*LayoutManager.*',
+                '**/*ScrollHandler.*',
+                '**/*ScrollListener.*',
+                '**/*Layout.*',
+                '**/*Fragment.*',
+                '**/*FragmentKt.*',
+                '**/*View.*',
+                '**/amplify/**/*.*',
+                '**/di/**/*.*',
+                '**/app/**/initializer/library/*.*',
+                '**/*Tracker.*',
+                '**/*Event.*',
+                '**/fragment/**/*.class',
+                '**/type/**/*.class',
+                '**/BR.*',
+                '**/Comparisons*',
+                '**/HttpClient*',
+                '**/Endpoints*',
+                'buildSrc/**/*.*',
+                '**/data/data/*.*',
+                '**/data/local/db/*.*',
+                '**/data/remote/datasource/*DataSource.*',
+                '**/app/**/ProfileItem.*',
+                '**/common/ui/view/**/*.*',
+                '**/common/ui/form/**/*.*',
+                '**/*StringProvider.*',
+                '**/app/choco/configuration/Env.*',
+                '**/app/choco/common/navigation/LobbyActivityForResult.*',
+                '**/feature/chocolateui/ui/*.*',
+                '**/common/interfaces/**/*.*',
+        ]
+
+        final kotlinTree = fileTree(dir: "${buildDir}/tmp/kotlin-classes/qa", excludes: fileFilter)
+        final javacTree = fileTree(dir: "${buildDir}/intermediates/javac/qa", excludes: fileFilter)
+
+        classDirectories.from = files([kotlinTree], [javacTree])
+        def coverageSourceDirs = [
+                "src/main/java",
+                "src/qa/java"
+        ]
+
+        additionalSourceDirs.from = files(coverageSourceDirs)
+        sourceDirectories.from = files(coverageSourceDirs)
+        executionData.from = files("${project.buildDir}/jacoco/testQaUnitTest.exec")
+
+        reports {
+            html.enabled = true
+            xml.enabled = true
+        }
+    }
+}

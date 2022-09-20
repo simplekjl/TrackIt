@@ -1,0 +1,25 @@
+apply plugin: 'jacoco'
+
+project.afterEvaluate {
+
+    task coverageReport(type: JacocoReport, dependsOn: "test") {
+        group = "Reporting"
+        description = "Generate Jacoco coverage reports on Kotlin libraies build."
+
+        final kotlinTree = fileTree(dir: "${buildDir}/classes/kotlin/main")
+
+        classDirectories.from = files([kotlinTree])
+        def coverageSourceDirs = [
+                "src/main/java"
+        ]
+
+        additionalSourceDirs.from = files(coverageSourceDirs)
+        sourceDirectories.from = files(coverageSourceDirs)
+        executionData.from = files("${project.buildDir}/jacoco/test.exec")
+
+        reports {
+            html.enabled = true
+            xml.enabled = true
+        }
+    }
+}

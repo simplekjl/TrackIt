@@ -125,14 +125,14 @@ internal class LocalSourceImplTest {
     @Test
     fun deleteMeasure() {
         every { database.getWeightDao().deleteMeasure(measures) } returns Unit
-        val result = localSource.deleteMeasure(measures)
+        localSource.deleteMeasure(measures)
         verify { database.getWeightDao().deleteMeasure(measures) }
     }
 
     @Test
     fun updateMeasure() {
         every { database.getWeightDao().updateMeasure(measures) } returns Unit
-        val result = localSource.updateMeasure(measures)
+        localSource.updateMeasure(measures)
         verify { localSource.updateMeasure(measures) }
     }
 }

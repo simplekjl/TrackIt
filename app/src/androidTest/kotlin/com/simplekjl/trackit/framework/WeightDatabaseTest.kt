@@ -12,6 +12,8 @@ import com.appmattus.kotlinfixture.kotlinFixture
 import com.google.common.truth.Truth.assertThat
 import com.simplekjl.domain.model.Measures
 import com.simplekjl.domain.model.Weight
+import com.simplekjl.trackit.framework.database.WeightDao
+import com.simplekjl.trackit.framework.database.WeightDatabase
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule

@@ -1,4 +1,4 @@
-package com.simplekjl.trackit.framework
+package com.simplekjl.trackit.framework.database
 
 import androidx.room.Dao
 import androidx.room.Database
@@ -10,7 +10,7 @@ import androidx.room.TypeConverters
 import androidx.room.Update
 import com.simplekjl.domain.model.Measures
 import com.simplekjl.domain.model.Weight
-import com.simplekjl.trackit.framework.converters.Converters
+import com.simplekjl.trackit.framework.database.converters.Converters
 
 @Database(entities = [Weight::class, Measures::class], version = 1, exportSchema = true)
 @TypeConverters(Converters::class)

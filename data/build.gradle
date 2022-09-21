@@ -2,4 +2,6 @@ apply from: "$rootProject.projectDir/common-library.gradle"
 
 dependencies {
     testImplementation project(':testshared')
+
+    implementation project(path: ':domain')
 }

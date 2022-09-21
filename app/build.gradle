@@ -31,7 +31,7 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = ["room.schemaLocation":"$projectDir/schemas".toString()]
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
     }
@@ -133,6 +133,8 @@ dependencies {
     // Used for displaying Preview
     implementation ComposeLibraries.activity
     implementation Libraries.fixture
+    androidTestImplementation Libraries.fixture
+    testImplementation Libraries.fixture
     implementation 'androidx.navigation:navigation-testing:2.5.2'
 
     androidTestImplementation ComposeLibraries.uiTestJunit4

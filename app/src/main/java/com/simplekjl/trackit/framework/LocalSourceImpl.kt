@@ -8,7 +8,7 @@ import com.simplekjl.trackit.framework.database.WeightDatabase
 class LocalSourceImpl(private val database: WeightDatabase) : LocalSource {
     override fun getAllWeights(): List<Weight> = database.getWeightDao().getAllWeights()
 
-    override fun getAllWeightsFromTo(startDate: Long?, endDate: Long?): Int {
+    override fun getAllWeightsFromTo(startDate: Long?, endDate: Long?): List<Weight> {
         return database.getWeightDao().getAllWeightsFromTo(startDate, endDate)
     }
 
@@ -17,7 +17,7 @@ class LocalSourceImpl(private val database: WeightDatabase) : LocalSource {
     }
 
     override fun insertAllWeights(vararg weights: Weight) {
-        return insertAllWeights(*weights)
+        return database.getWeightDao().insertAllWeights(*weights)
     }
 
     override fun deleteWeight(weight: Weight) {
@@ -36,7 +36,7 @@ class LocalSourceImpl(private val database: WeightDatabase) : LocalSource {
         return database.getWeightDao().getMeasureByDate(date)
     }
 
-    override fun getAllMeasurementsFromTo(startDate: Long?, endDate: Long?): Int {
+    override fun getAllMeasurementsFromTo(startDate: Long?, endDate: Long?): List<Measures> {
         return database.getWeightDao().getAllMeasurementsFromTo(startDate, endDate)
     }
 

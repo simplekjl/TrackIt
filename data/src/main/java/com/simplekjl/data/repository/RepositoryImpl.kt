@@ -12,7 +12,7 @@ class RepositoryImpl(
         return localSource.getAllWeights()
     }
 
-    override fun getAllWeightsFromTo(startDate: Long?, endDate: Long?): Int {
+    override fun getAllWeightsFromTo(startDate: Long?, endDate: Long?): List<Weight> {
         return localSource.getAllWeightsFromTo(startDate, endDate)
     }
 
@@ -40,7 +40,7 @@ class RepositoryImpl(
         return localSource.getMeasureByDate(date)
     }
 
-    override fun getAllMeasurementsFromTo(startDate: Long?, endDate: Long?): Int {
+    override fun getAllMeasurementsFromTo(startDate: Long?, endDate: Long?): List<Measures> {
         return localSource.getAllMeasurementsFromTo(startDate, endDate)
     }
 

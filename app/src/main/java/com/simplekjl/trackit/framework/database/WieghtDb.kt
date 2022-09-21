@@ -25,7 +25,7 @@ interface WeightDao {
     fun getAllWeights(): List<Weight>
 
     @Query("SELECT * FROM weight WHERE date BETWEEN :startDate AND :endDate")
-    fun getAllWeightsFromTo(startDate: Long?, endDate: Long?): Int
+    fun getAllWeightsFromTo(startDate: Long?, endDate: Long?): List<Weight>
 
     @Query("SELECT * FROM weight WHERE date IS :date")
     fun findWeightByDate(date: Long): Weight
@@ -46,7 +46,7 @@ interface WeightDao {
     fun getMeasureByDate(date: Long): Measures
 
     @Query("SELECT * FROM measures WHERE date BETWEEN :startDate AND :endDate")
-    fun getAllMeasurementsFromTo(startDate: Long?, endDate: Long?): Int
+    fun getAllMeasurementsFromTo(startDate: Long?, endDate: Long?): List<Measures>
 
     @Insert
     fun insertAllMeasures(vararg measures: Measures)

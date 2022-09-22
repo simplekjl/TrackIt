@@ -1,7 +1,7 @@
 package com.simplekjl.trackit.di
 
 import androidx.room.Room
-import com.simplekjl.domain.repository.LocalSource
+import com.simplekjl.data.repository.LocalSource
 import com.simplekjl.trackit.BuildConfig
 import com.simplekjl.trackit.framework.LocalSourceImpl
 import com.simplekjl.trackit.framework.database.WeightDao

@@ -3,9 +3,9 @@ package com.simplekjl.data.repository
 import com.appmattus.kotlinfixture.decorator.nullability.NeverNullStrategy
 import com.appmattus.kotlinfixture.decorator.nullability.nullabilityStrategy
 import com.appmattus.kotlinfixture.kotlinFixture
-import com.simplekjl.domain.model.Measures
-import com.simplekjl.domain.model.Weight
-import com.simplekjl.domain.repository.LocalSource
+import com.simplekjl.data.mapper.toModel
+import com.simplekjl.data.model.MeasuresRaw
+import com.simplekjl.data.model.WeightRaw
 import com.simplekjl.domain.repository.Repository
 import io.mockk.MockKAnnotations
 import io.mockk.every
@@ -26,8 +26,8 @@ internal class RepositoryImplTest {
 
     private lateinit var repository: Repository
 
-    private val weight: Weight = fixture()
-    private val measures: Measures = fixture()
+    private val weightRaw: WeightRaw = fixture()
+    private val measuresRaw: MeasuresRaw = fixture()
 
     @Before
     fun setUp() {
@@ -56,21 +56,21 @@ internal class RepositoryImplTest {
 
     @Test
     fun findWeightByDate() {
-        every { localSource.findWeightByDate(weight.date) } returns weight
-        val result = repository.findWeightByDate(weight.date)
-        assert(result.date == weight.date)
+        every { localSource.findWeightByDate(weightRaw.date) } returns weightRaw
+        val result = repository.findWeightByDate(weightRaw.date)
+        assert(result.date == weightRaw.date)
     }
 
     @Test
     fun insertAllWeights() {
-        every { localSource.insertAllWeights(weight) } returns Unit
-        repository.insertAllWeights(weight)
-        verify { localSource.insertAllWeights(weight) }
+        every { localSource.insertAllWeights(weightRaw) } returns Unit
+        repository.insertAllWeights(weightRaw.toModel())
+        verify { localSource.insertAllWeights(weightRaw) }
     }
 
     @Test
     fun deleteWeight() {
-        every { localSource.deleteWeight(weight) } returns Unit
+        every { localSource.deleteWeight(weightRaw) } returns Unit
         every { localSource.getAllWeights() } returns emptyList()
         val result = repository.getAllWeights()
         assert(result.isEmpty())
@@ -78,9 +78,9 @@ internal class RepositoryImplTest {
 
     @Test
     fun updateWeight() {
-        every { localSource.updateWeight(weight) } returns Unit
-        every { localSource.findWeightByDate(weight.date) } returns weight.copy(uid = 1)
-        val result = repository.findWeightByDate(weight.date)
+        every { localSource.updateWeight(weightRaw) } returns Unit
+        every { localSource.findWeightByDate(weightRaw.date) } returns weightRaw.copy(uid = 1)
+        val result = repository.findWeightByDate(weightRaw.date)
         assert(result.uid == 1)
     }
 
@@ -93,15 +93,15 @@ internal class RepositoryImplTest {
 
     @Test
     fun getMeasureByDate() {
-        every { localSource.getMeasureByDate(measures.date) } returns measures
-        val result = repository.getMeasureByDate(measures.date)
-        assert(result.date == measures.date)
+        every { localSource.getMeasureByDate(measuresRaw.date) } returns measuresRaw
+        val result = repository.getMeasureByDate(measuresRaw.date)
+        assert(result.date == measuresRaw.date)
     }
 
     @Test
     fun getAllMeasurementsFromTo() {
         every { localSource.getAllMeasurementsFromTo(100L, 1001L) } returns listOf(
-            measures
+            measuresRaw
         )
         val result = repository.getAllMeasurementsFromTo(100L, 1001L)
         assert(result.size == 1)
@@ -109,24 +109,24 @@ internal class RepositoryImplTest {
 
     @Test
     fun insertAllMeasures() {
-        every { localSource.insertAllMeasures(measures) } returns Unit
-        every { localSource.getMeasureByDate(measures.date) } returns measures
-        repository.insertAllMeasures(measures)
-        val result = repository.getMeasureByDate(measures.date)
-        assert(result.date == measures.date)
+        every { localSource.insertAllMeasures(measuresRaw) } returns Unit
+        every { localSource.getMeasureByDate(measuresRaw.date) } returns measuresRaw
+        repository.insertAllMeasures(measuresRaw.toModel())
+        val result = repository.getMeasureByDate(measuresRaw.date)
+        assert(result.date == measuresRaw.date)
     }
 
     @Test
     fun deleteMeasure() {
-        every { localSource.deleteMeasure(measures) } returns Unit
-        repository.deleteMeasure(measures)
-        verify { localSource.deleteMeasure(measures) }
+        every { localSource.deleteMeasure(measuresRaw) } returns Unit
+        repository.deleteMeasure(measuresRaw.toModel())
+        verify { localSource.deleteMeasure(measuresRaw) }
     }
 
     @Test
     fun updateMeasure() {
-        every { localSource.updateMeasure(measures) } returns Unit
-        repository.updateMeasure(measures)
-        verify { repository.updateMeasure(measures) }
+        every { localSource.updateMeasure(measuresRaw) } returns Unit
+        repository.updateMeasure(measuresRaw.toModel())
+        verify { repository.updateMeasure(measuresRaw.toModel()) }
     }
 }

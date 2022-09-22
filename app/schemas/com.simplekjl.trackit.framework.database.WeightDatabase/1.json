@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "add9b46aa46c7d2e74add90c5f45db29",
+    "identityHash": "127ce1236beb0b123fbeda9f9c4055a4",
     "entities": [
       {
         "tableName": "weight",
@@ -43,7 +43,7 @@
         "foreignKeys": []
       },
       {
-        "tableName": "Measures",
+        "tableName": "MeasuresRaw",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`entryUid` INTEGER NOT NULL, `date` INTEGER NOT NULL, `chest` REAL NOT NULL, `leftArm` REAL NOT NULL, `rightArm` REAL NOT NULL, `waist` REAL NOT NULL, `hips` REAL NOT NULL, `leftThigh` REAL NOT NULL, `rightThigh` REAL NOT NULL, `leftCalf` REAL NOT NULL, `rightCalf` REAL NOT NULL, PRIMARY KEY(`entryUid`, `date`))",
         "fields": [
           {
@@ -127,7 +127,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'add9b46aa46c7d2e74add90c5f45db29')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '127ce1236beb0b123fbeda9f9c4055a4')"
     ]
   }
 }

@@ -27,7 +27,6 @@ import com.simplekjl.ui.theme.components.HomeSection
 import com.simplekjl.ui.theme.components.LinearChartProgress
 import com.simplekjl.ui.theme.components.TrackItMainToolbar
 import com.simplekjl.ui.theme.components.WeightDetailsSection
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent.inject
@@ -62,10 +61,9 @@ fun HomeScreen(
                 coroutineScope.launch {
                     useCase(
                         Weight(
-                            1,
-                            System.currentTimeMillis(),
-                            74.0,
-                            null
+                            date = System.currentTimeMillis(),
+                            weight = 74.0,
+                            note = null
                         )
                     ).first()
                 }

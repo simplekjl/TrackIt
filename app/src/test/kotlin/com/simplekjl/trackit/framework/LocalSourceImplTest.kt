@@ -3,9 +3,9 @@ package com.simplekjl.trackit.framework
 import com.appmattus.kotlinfixture.decorator.nullability.NeverNullStrategy
 import com.appmattus.kotlinfixture.decorator.nullability.nullabilityStrategy
 import com.appmattus.kotlinfixture.kotlinFixture
-import com.simplekjl.domain.model.Measures
-import com.simplekjl.domain.model.Weight
-import com.simplekjl.domain.repository.LocalSource
+import com.simplekjl.data.model.MeasuresRaw
+import com.simplekjl.data.model.WeightRaw
+import com.simplekjl.data.repository.LocalSource
 import com.simplekjl.trackit.framework.database.WeightDao
 import com.simplekjl.trackit.framework.database.WeightDatabase
 import io.mockk.MockKAnnotations
@@ -31,8 +31,8 @@ internal class LocalSourceImplTest {
 
     private lateinit var localSource: LocalSource
 
-    private val weight: Weight = fixture()
-    private val measures: Measures = fixture()
+    private val weightRaw: WeightRaw = fixture()
+    private val measuresRaw: MeasuresRaw = fixture()
 
     @Before
     fun setUp() {
@@ -62,21 +62,21 @@ internal class LocalSourceImplTest {
 
     @Test
     fun findWeightByDate() {
-        every { database.getWeightDao().findWeightByDate(weight.date) } returns weight
-        val result = localSource.findWeightByDate(weight.date)
-        assert(result.date == weight.date)
+        every { database.getWeightDao().findWeightByDate(weightRaw.date) } returns weightRaw
+        val result = localSource.findWeightByDate(weightRaw.date)
+        assert(result.date == weightRaw.date)
     }
 
     @Test
     fun insertAllWeights() {
-        every { database.getWeightDao().insertAllWeights(weight) } returns Unit
-        localSource.insertAllWeights(weight)
-        verify { database.getWeightDao().insertAllWeights(weight) }
+        every { database.getWeightDao().insertAllWeights(weightRaw) } returns Unit
+        localSource.insertAllWeights(weightRaw)
+        verify { database.getWeightDao().insertAllWeights(weightRaw) }
     }
 
     @Test
     fun deleteWeight() {
-        every { database.getWeightDao().deleteWeight(weight) } returns Unit
+        every { database.getWeightDao().deleteWeight(weightRaw) } returns Unit
         every { database.getWeightDao().getAllWeights() } returns emptyList()
         val result = localSource.getAllWeights()
         assert(result.isEmpty())
@@ -84,9 +84,9 @@ internal class LocalSourceImplTest {
 
     @Test
     fun updateWeight() {
-        every { database.getWeightDao().updateWeight(weight) } returns Unit
-        every { database.getWeightDao().findWeightByDate(weight.date) } returns weight.copy(uid = 1)
-        val result = localSource.findWeightByDate(weight.date)
+        every { database.getWeightDao().updateWeight(weightRaw) } returns Unit
+        every { database.getWeightDao().findWeightByDate(weightRaw.date) } returns weightRaw.copy(uid = 1)
+        val result = localSource.findWeightByDate(weightRaw.date)
         assert(result.uid == 1)
     }
 
@@ -99,15 +99,15 @@ internal class LocalSourceImplTest {
 
     @Test
     fun getMeasureByDate() {
-        every { database.getWeightDao().getMeasureByDate(measures.date) } returns measures
-        val result = localSource.getMeasureByDate(measures.date)
-        assert(result.date == measures.date)
+        every { database.getWeightDao().getMeasureByDate(measuresRaw.date) } returns measuresRaw
+        val result = localSource.getMeasureByDate(measuresRaw.date)
+        assert(result.date == measuresRaw.date)
     }
 
     @Test
     fun getAllMeasurementsFromTo() {
         every { database.getWeightDao().getAllMeasurementsFromTo(100L, 1001L) } returns listOf(
-            measures
+            measuresRaw
         )
         val result = localSource.getAllMeasurementsFromTo(100L, 1001L)
         assert(result.size == 1)
@@ -115,24 +115,24 @@ internal class LocalSourceImplTest {
 
     @Test
     fun insertAllMeasures() {
-        every { database.getWeightDao().insertAllMeasures(measures) } returns Unit
-        every { database.getWeightDao().getMeasureByDate(measures.date) } returns measures
-        localSource.insertAllMeasures(measures)
-        val result = localSource.getMeasureByDate(measures.date)
-        assert(result.date == measures.date)
+        every { database.getWeightDao().insertAllMeasures(measuresRaw) } returns Unit
+        every { database.getWeightDao().getMeasureByDate(measuresRaw.date) } returns measuresRaw
+        localSource.insertAllMeasures(measuresRaw)
+        val result = localSource.getMeasureByDate(measuresRaw.date)
+        assert(result.date == measuresRaw.date)
     }
 
     @Test
     fun deleteMeasure() {
-        every { database.getWeightDao().deleteMeasure(measures) } returns Unit
-        localSource.deleteMeasure(measures)
-        verify { database.getWeightDao().deleteMeasure(measures) }
+        every { database.getWeightDao().deleteMeasure(measuresRaw) } returns Unit
+        localSource.deleteMeasure(measuresRaw)
+        verify { database.getWeightDao().deleteMeasure(measuresRaw) }
     }
 
     @Test
     fun updateMeasure() {
-        every { database.getWeightDao().updateMeasure(measures) } returns Unit
-        localSource.updateMeasure(measures)
-        verify { localSource.updateMeasure(measures) }
+        every { database.getWeightDao().updateMeasure(measuresRaw) } returns Unit
+        localSource.updateMeasure(measuresRaw)
+        verify { localSource.updateMeasure(measuresRaw) }
     }
 }

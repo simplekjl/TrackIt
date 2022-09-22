@@ -7,7 +7,7 @@ interface Repository {
     fun getAllWeights(): List<Weight>
     fun getAllWeightsFromTo(startDate: Long?, endDate: Long?): List<Weight>
     fun findWeightByDate(date: Long): Weight
-    fun insertAllWeights(vararg weights: Weight)
+    fun insertAllWeights(vararg weight: Weight)
     fun deleteWeight(weight: Weight)
     fun updateWeight(weight: Weight)
     fun getAllMeasures(): List<Measures>

@@ -1,11 +1,11 @@
-package com.simplekjl.domain.model
+package com.simplekjl.data.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "weight")
-data class Weight(
+data class WeightRaw(
     @PrimaryKey(autoGenerate = true) val uid: Int,
     @ColumnInfo(name = "date") val date: Long,
     @ColumnInfo(name = "weight") val weight: Double,
@@ -14,7 +14,7 @@ data class Weight(
 
 // User should be able to also create measurements without tracking weight
 @Entity(primaryKeys = ["entryUid", "date"])
-data class Measures(
+data class MeasuresRaw(
     val entryUid: Int,
     val date: Long,
     val chest: Double,

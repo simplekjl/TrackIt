@@ -11,9 +11,12 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.simplekjl.domain.model.Weight
+import com.simplekjl.domain.usecase.NewWeightUseCase
 import com.simplekjl.trackit.R
 import com.simplekjl.ui.theme.SampleData
 import com.simplekjl.ui.theme.base.TrackItColors
@@ -24,7 +27,10 @@ import com.simplekjl.ui.theme.components.HomeSection
 import com.simplekjl.ui.theme.components.LinearChartProgress
 import com.simplekjl.ui.theme.components.TrackItMainToolbar
 import com.simplekjl.ui.theme.components.WeightDetailsSection
-
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import org.koin.java.KoinJavaComponent.inject
 
 @Preview
 @Composable
@@ -41,6 +47,8 @@ fun HomeScreen(
     currentWeight: Double,
     goalWeight: Double
 ) {
+    val coroutineScope = rememberCoroutineScope()
+    val useCase: NewWeightUseCase by inject(NewWeightUseCase::class.java)
     Scaffold(
         topBar = {
             TrackItMainToolbar(
@@ -49,7 +57,20 @@ fun HomeScreen(
             )
         },
         modifier = modifier.fillMaxSize(),
-        floatingActionButton = { AddDeleteFabButton(onClick = {}) }
+        floatingActionButton = {
+            AddDeleteFabButton(onClick = {
+                coroutineScope.launch {
+                    useCase(
+                        Weight(
+                            1,
+                            System.currentTimeMillis(),
+                            74.0,
+                            null
+                        )
+                    ).first()
+                }
+            })
+        }
     ) { paddingValues ->
         Column(
             modifier

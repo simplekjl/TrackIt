@@ -4,7 +4,7 @@ import app.simplekjl.test.util.MainCoroutineRule
 import com.appmattus.kotlinfixture.decorator.nullability.NeverNullStrategy
 import com.appmattus.kotlinfixture.decorator.nullability.nullabilityStrategy
 import com.appmattus.kotlinfixture.kotlinFixture
-import com.simplekjl.domain.model.WeightRaw
+import com.simplekjl.domain.model.Weight
 import com.simplekjl.domain.repository.Repository
 import com.simplekjl.domain.utils.Result
 import io.mockk.MockKAnnotations
@@ -44,7 +44,7 @@ internal class NewWeightUseCaseTest {
 
     @Test
     fun `call repository when using usecase`() = runBlockingTest {
-        val weightRaw: WeightRaw = fixture()
+        val weightRaw: Weight = fixture()
         every { repository.insertAllWeights(weightRaw) } returns Unit
         val resultFlow = useCase(weightRaw).first()
         verify { repository.insertAllWeights(weightRaw) }
@@ -53,7 +53,7 @@ internal class NewWeightUseCaseTest {
 
     @Test
     fun `call repository returns exception`() = runBlockingTest {
-        val weightRaw: WeightRaw = fixture()
+        val weightRaw: Weight = fixture()
         every { repository.insertAllWeights(weightRaw) } throws Exception("")
         val resultFlow = useCase(weightRaw).first()
         verify { repository.insertAllWeights(weightRaw) }

@@ -4,5 +4,4 @@ dependencies {
     testImplementation project(':testshared')
 
     implementation project(path: ':domain')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
 }

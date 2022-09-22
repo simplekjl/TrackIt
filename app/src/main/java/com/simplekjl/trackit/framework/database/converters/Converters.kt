@@ -1,4 +1,4 @@
-package com.simplekjl.trackit.framework.converters
+package com.simplekjl.trackit.framework.database.converters
 
 import androidx.room.TypeConverter
 import java.util.Date

@@ -1,0 +1,133 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "add9b46aa46c7d2e74add90c5f45db29",
+    "entities": [
+      {
+        "tableName": "weight",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `date` INTEGER NOT NULL, `weight` REAL NOT NULL, `note` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "weight",
+            "columnName": "weight",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "note",
+            "columnName": "note",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "uid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Measures",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`entryUid` INTEGER NOT NULL, `date` INTEGER NOT NULL, `chest` REAL NOT NULL, `leftArm` REAL NOT NULL, `rightArm` REAL NOT NULL, `waist` REAL NOT NULL, `hips` REAL NOT NULL, `leftThigh` REAL NOT NULL, `rightThigh` REAL NOT NULL, `leftCalf` REAL NOT NULL, `rightCalf` REAL NOT NULL, PRIMARY KEY(`entryUid`, `date`))",
+        "fields": [
+          {
+            "fieldPath": "entryUid",
+            "columnName": "entryUid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "chest",
+            "columnName": "chest",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "leftArm",
+            "columnName": "leftArm",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rightArm",
+            "columnName": "rightArm",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "waist",
+            "columnName": "waist",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hips",
+            "columnName": "hips",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "leftThigh",
+            "columnName": "leftThigh",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rightThigh",
+            "columnName": "rightThigh",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "leftCalf",
+            "columnName": "leftCalf",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rightCalf",
+            "columnName": "rightCalf",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "entryUid",
+            "date"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'add9b46aa46c7d2e74add90c5f45db29')"
+    ]
+  }
+}

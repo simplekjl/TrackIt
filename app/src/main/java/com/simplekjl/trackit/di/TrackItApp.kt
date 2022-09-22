@@ -1,15 +1,13 @@
-package com.simplekjl.trackit
+package com.simplekjl.trackit.di
 
 import android.app.Application
-import androidx.room.Room
-import com.simplekjl.trackit.framework.WeightDao
-import com.simplekjl.trackit.framework.WeightDatabase
-import org.koin.android.ext.koin.androidApplication
+import com.simplekjl.data.di.dataModule
+import com.simplekjl.domain.di.domainModule
+import com.simplekjl.trackit.BuildConfig
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.GlobalContext.startKoin
 import org.koin.core.logger.Level
-import org.koin.dsl.module
 
 class TrackItApp : Application() {
 
@@ -20,7 +18,9 @@ class TrackItApp : Application() {
             androidContext(this@TrackItApp)
             modules(
                 listOf(
-                    databaseModule
+                    mainModule,
+                    dataModule,
+                    domainModule
                 )
             )
         }
@@ -29,20 +29,6 @@ class TrackItApp : Application() {
     companion object {
         val isReleaseBuild: Boolean
             get() = isReleaseBuild(BuildConfig.BUILD_TYPE)
-    }
-}
-
-val databaseModule = module {
-    single {
-        Room.databaseBuilder(
-            androidApplication(),
-            WeightDatabase::class.java,
-            BuildConfig.DB_NAME
-        ).build()
-    }
-    single<WeightDao> {
-        val database = get<WeightDatabase>()
-        database.getWeightDao()
     }
 }
 

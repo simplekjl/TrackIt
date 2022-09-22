@@ -1,8 +1,9 @@
-package com.simplekjl.trackit
+package com.simplekjl.trackit.di
 
 import android.app.Application
 import com.simplekjl.data.di.dataModule
-import com.simplekjl.trackit.di.mainModule
+import com.simplekjl.domain.di.domainModule
+import com.simplekjl.trackit.BuildConfig
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.GlobalContext.startKoin
@@ -18,7 +19,8 @@ class TrackItApp : Application() {
             modules(
                 listOf(
                     mainModule,
-                    dataModule
+                    dataModule,
+                    domainModule
                 )
             )
         }

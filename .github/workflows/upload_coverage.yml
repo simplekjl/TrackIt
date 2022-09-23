@@ -27,7 +27,7 @@ jobs:
 
       - name: Upload Codeclimate Coverage
         env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+          CC_TEST_REPORTER_ID: 3b545cb2bd8e831b401989bb763447278bb2218a734b34304142f87fae2d4e78
         run: |
           chmod +x scripts/upload_coverage.sh
           ./scripts/upload_coverage.sh

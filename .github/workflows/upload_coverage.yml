@@ -2,27 +2,20 @@ name: Test
 on: [push, pull_request]
 jobs:
   run-tests:
-    runs-on: ubuntu-latest
-    steps:
-      - name: before_build
-        uses: caffco/code-climate-github-action@v1.0.0
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        with:
-          run_before_build: 'true'
-      - name: Run tests
-        run: yarn test --coverage
-      - name: collect_coverage
-        uses: caffco/code-climate-github-action@v1.0.0
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        with:
-          collect_coverage: 'true'
-          coverage_file_patterns: |
-            **/*.lcov:lcov
-      - name: after_build
-        uses: caffco/code-climate-github-action@v1.0.0
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        with:
-          run_after_build: 'true'
+      needs: [ test ]
+      name: coverage
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@master
+        - uses: actions/setup-node@master
+          with:
+            node-version: '12'
+        - run: npm install -g yarn
+        - run: yarn install
+        - run: yarn build
+        - uses: paambaati/codeclimate-action@v3.0.0
+          env:
+            CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+          with:
+            coverageCommand: yarn run coverage
+            debug: true

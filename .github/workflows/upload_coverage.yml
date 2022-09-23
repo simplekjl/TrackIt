@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@feature/upload-code-quality-percentage
       - name: Notify Codeclimate Coverage
         run: |
           chmod +x scripts/notify_code_climate.sh

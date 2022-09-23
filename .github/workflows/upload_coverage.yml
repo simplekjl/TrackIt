@@ -3,7 +3,7 @@ name: Test Coverage
 on:
   push:
     branches:
-      - main
+      - feature/upload-code-quality-percentage
 
 jobs:
   test:

@@ -21,3 +21,5 @@ jobs:
 
       - name: Code Climate Coverage Action
         uses: paambaati/codeclimate-action@v3.0.0
+        env:
+          CC_TEST_REPORTER_ID: 3b545cb2bd8e831b401989bb763447278bb2218a734b34304142f87fae2d4e78

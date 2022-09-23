@@ -28,6 +28,6 @@ jobs:
           CC_TEST_REPORTER_ID: 3b545cb2bd8e831b401989bb763447278bb2218a734b34304142f87fae2d4e78
           JACOCO_SOURCE_PATH: "${{github.workspace}}/app/build/test-results/testDebugUnitTest"
       with:
-        # The report file must be there, otherwise Code Climate won't find it
-        coverageCommand: mvn test
-        coverageLocations: ${{github.workspace}}/app/build/test-results/testDebugUnitTest/*.xml:jacoco
+          # The report file must be there, otherwise Code Climate won't find it
+          coverageCommand: mvn test
+          coverageLocations: ${{github.workspace}}/app/build/test-results/testDebugUnitTest/*.xml:jacoco

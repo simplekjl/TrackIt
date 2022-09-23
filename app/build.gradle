@@ -38,8 +38,28 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+
+        }
+        debug {
+            debuggable true
+
+            applicationIdSuffix ".dev"
+            versionNameSuffix "_dev"
+
+
+        }
+        qa {
+            initWith debug
+
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            applicationIdSuffix ".qa"
+            versionNameSuffix "_qa"
+            matchingFallbacks = ['debug']
         }
     }
 

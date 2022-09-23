@@ -5,7 +5,7 @@ plugins {
 }
 
 apply from: "$rootProject.projectDir/ktlint.gradle"
-apply from: "$rootProject.projectDir/coverage-android.gradle"
+apply from: "$rootProject.projectDir/jacoco.gradle"
 apply plugin: 'kotlin-kapt'
 
 android {

@@ -1,0 +1,2 @@
+# TrackIt
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/500d5749743347f19d12a590f69f18b5)](https://app.codacy.com/gh/simplekjl/TrackIt?utm_source=github.com&utm_medium=referral&utm_content=simplekjl/TrackIt&utm_campaign=Badge_Grade_Settings)

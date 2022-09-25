@@ -2,10 +2,11 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'jacoco'
 }
 
 apply from: "$rootProject.projectDir/ktlint.gradle"
-apply from: "$rootProject.projectDir/jacoco.gradle"
+apply from: "$rootProject.projectDir/coverage-android.gradle"
 apply plugin: 'kotlin-kapt'
 
 android {
@@ -45,11 +46,9 @@ android {
         }
         debug {
             debuggable true
-
+            testCoverageEnabled true
             applicationIdSuffix ".dev"
             versionNameSuffix "_dev"
-
-
         }
         qa {
             initWith debug
@@ -64,6 +63,12 @@ android {
     }
 
     testOptions {
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
+        unitTests.returnDefaultValues = true
         animationsDisabled true
         unitTests.includeAndroidResources = true
     }

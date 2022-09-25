@@ -23,8 +23,8 @@ jobs:
       - uses: actions/checkout@v2
 
       # Execute unit tests
-      - name: Unit Test
-        run: ./gradlew testDebugUnitTest
+      - name: Unit Test with Android device
+        run: ./gradlew connectedCheck
 
       - name: generate report
         uses: actions/upload-artifact@v2

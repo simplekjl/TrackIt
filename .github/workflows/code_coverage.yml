@@ -29,6 +29,7 @@ jobs:
           api-level: 29
           script: ./gradlew connectedCheck
               #./gradlew createDebugCoverageReport:
+      - name: Debug UnitTest
         run: ./gradlew testDebugUnitTest
 
       - name: generate report

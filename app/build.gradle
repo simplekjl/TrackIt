@@ -102,17 +102,17 @@ android {
         exclude 'META-INF/notice.txt'
         exclude("META-INF/*.kotlin_module")
     }
-    configurations {
+    configurations{
         cleanedAnnotations
         all {
             resolutionStrategy {
-                exclude group: "org.jetbrains.kotlinx", module: "kotlinx-coroutines-debug"
                 eachDependency { details ->
                     if ('org.jacoco' == details.requested.group) {
                         details.useVersion Versions.jacoco
                     }
-                    exclude group: 'com.google.guava', module: 'listenablefuture'
+                    //exclude group: "org.jetbrains.kotlinx", module: "kotlinx-coroutines-debug"
                 }
+                exclude group: 'com.google.guava', module: 'listenablefuture'
             }
         }
     }

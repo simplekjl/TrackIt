@@ -90,13 +90,31 @@ android {
         kotlinCompilerExtensionVersion Configs.composeVersion
     }
     packagingOptions {
-        exclude 'META-INF/AL2.0'
-        exclude 'META-INF/LGPL2.1'
-        exclude 'META-INF/*.kotlin_module'
+        exclude 'META-INF/licenses/ASM'
+        exclude "**/attach_hotspot_windows.dll"
+        pickFirst 'META-INF/*'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude("META-INF/*.kotlin_module")
     }
     configurations {
         cleanedAnnotations
-        all*.exclude group: 'com.google.guava', module: 'listenablefuture'
+        all {
+            resolutionStrategy {
+                exclude group: "org.jetbrains.kotlinx", module: "kotlinx-coroutines-debug"
+                eachDependency { details ->
+                    if ('org.jacoco' == details.requested.group) {
+                        details.useVersion Versions.jacoco
+                    }
+                    exclude group: 'com.google.guava', module: 'listenablefuture'
+                }
+            }
+        }
     }
 }
 
@@ -191,4 +209,5 @@ dependencies {
     debugApi "androidx.customview:customview-poolingcontainer:1.0.0"
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.17.0"
     implementation "com.google.accompanist:accompanist-swiperefresh:0.26.3-beta"
+    implementation "com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava"
 }

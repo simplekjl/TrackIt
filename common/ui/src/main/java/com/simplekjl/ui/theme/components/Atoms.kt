@@ -220,7 +220,7 @@ fun LinearChartProgress(
     lineColor: Color,
 ) {
     val topLabel = stringResource(id = topLimitLabel)
-//    val bottomLabel = stringResource(id = bottomLimitLabel)
+    val bottomLabel = stringResource(id = bottomLimitLabel)
     AndroidView(
         modifier = modifier,
         factory = { context -> LineChart(context) },
@@ -230,9 +230,10 @@ fun LinearChartProgress(
             }
             val linearData = LineData(dataSet)
             linearChart.data = linearData
-            // grid properties
-            // https://stackoverflow.com/questions/31263097/mpandroidchart-hide-background-grid
-//            linearChart.xAxis.isEnabled = false
+            linearChart.setPinchZoom(false)
+            linearChart.setScaleEnabled(false)
+            linearChart.setTouchEnabled(true)
+            linearChart.isDoubleTapToZoomEnabled = false
             linearChart.axisRight.setDrawGridLines(false)
             linearChart.axisRight.isEnabled = false
             linearChart.xAxis.setDrawGridLines(false)

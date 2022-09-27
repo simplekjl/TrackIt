@@ -1,5 +1,6 @@
 package com.simplekjl.ui.theme.components
 
+import androidx.activity.compose.BackHandler
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -41,7 +42,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.toArgb
@@ -50,6 +50,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -64,6 +65,7 @@ import com.simplekjl.ui.theme.SampleData
 import com.simplekjl.ui.theme.base.TrackItColors
 import com.simplekjl.ui.theme.base.TrackItTheme
 import com.simplekjl.ui.theme.base.TrackItTypography
+import com.simplekjl.ui.theme.hideKeyboardAndClearFocus
 
 @Preview
 @Composable
@@ -148,11 +150,13 @@ fun WeightValueElement(
     weightValue: Double,
     colorRes: Color
 ) {
-    var showClearButton by remember { mutableStateOf(false) }
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = remember { FocusRequester() }
-
+    val focusManager = LocalFocusManager.current
     var weight by remember { mutableStateOf(weightValue.toString()) }
+    BackHandler(enabled = true) {
+        hideKeyboardAndClearFocus(focusRequester, focusManager)
+    }
     Column(
         modifier = modifier
             .wrapContentWidth()
@@ -164,17 +168,10 @@ fun WeightValueElement(
             style = TrackItTypography().h5,
             modifier = Modifier.paddingFromBaseline(top = 16.dp)
         )
-        // weight
-        val focusManager = LocalFocusManager.current
         OutlinedTextField(
             modifier = Modifier
                 .width(90.dp)
                 .align(alignment = Alignment.CenterHorizontally)
-                .onFocusChanged { focusState ->
-                    if (!focusState.isFocused) {
-                        focusRequester.freeFocus()
-                    }
-                }
                 .focusRequester(focusRequester)
                 .testTag("weightValue"),
             value = weight,
@@ -191,10 +188,12 @@ fun WeightValueElement(
             ),
             maxLines = 1,
             singleLine = true,
-            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Done
+            ),
             keyboardActions = KeyboardActions(onDone = {
-                focusRequester.freeFocus()
-                keyboardController?.hide()
+                hideKeyboardAndClearFocus(focusRequester, focusManager, keyboardController)
             }),
         )
     }

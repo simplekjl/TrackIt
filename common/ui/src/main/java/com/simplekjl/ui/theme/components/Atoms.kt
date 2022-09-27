@@ -181,6 +181,7 @@ fun WeightValueElement(
             },
             textStyle = TrackItTypography().h6.copy(textAlign = TextAlign.Center),
             colors = TextFieldDefaults.outlinedTextFieldColors(
+                textColor = colorRes,
                 focusedBorderColor = TrackItColors.mint,
                 unfocusedBorderColor = Color.Transparent,
                 backgroundColor = Color.Transparent,

@@ -25,18 +25,18 @@ dependencies {
     implementation project(':domain')
     testImplementation project(':testshared')
 
-    api ComposeLibraries.ui
+    implementation ComposeLibraries.ui
     // Tooling support (Previews, etc.)
-    api ComposeLibraries.uiTooling
+    implementation ComposeLibraries.uiTooling
     // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
-    api ComposeLibraries.foundation
+    implementation ComposeLibraries.foundation
     // Material Design
-    api ComposeLibraries.material
+    implementation ComposeLibraries.material
 
     // Used for displaying Preview
-    api ComposeLibraries.activity
+    implementation ComposeLibraries.activity
 
-    api Libraries.MPchart
+    implementation Libraries.MPchart
     androidTestImplementation ComposeLibraries.uiTestJunit4
     testImplementation ComposeLibraries.uiTestJunit4
     debugImplementation ComposeLibraries.uiTest
@@ -45,6 +45,6 @@ dependencies {
     testImplementation Libraries.robolectric
     // remove in the future
     debugImplementation "androidx.customview:customview-poolingcontainer:1.0.0"
-    debugImplementation "androidx.customview:customview:1.2.0-alpha01"
+    debugImplementation "androidx.customview:customview:1.2.0-alpha02"
 
 }

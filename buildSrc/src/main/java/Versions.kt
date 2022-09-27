@@ -62,7 +62,7 @@ object Versions {
 
     const val intercom = "10.4.2"
 
-    const val composeUi = "1.2.1"
+    const val composeUi = "1.2.0"
     const val kaspresso = "1.4.0"
     const val roomVersion = "2.4.2"
     const val MPchart_version = "v3.1.0"

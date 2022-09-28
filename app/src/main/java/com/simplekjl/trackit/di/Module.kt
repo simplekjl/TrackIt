@@ -6,6 +6,7 @@ import com.simplekjl.trackit.BuildConfig
 import com.simplekjl.trackit.framework.LocalSourceImpl
 import com.simplekjl.trackit.framework.database.WeightDao
 import com.simplekjl.trackit.framework.database.WeightDatabase
+import com.simplekjl.trackit.screen.home.HomeViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 
@@ -22,4 +23,5 @@ val mainModule = module {
         database.getWeightDao()
     }
     factory<LocalSource> { LocalSourceImpl(get()) }
+    factory { HomeViewModel(get(), get()) }
 }

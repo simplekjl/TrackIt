@@ -38,9 +38,9 @@ fun HomeSectionPreview() {
 // -- Section for every part of the main screen
 @Composable
 fun HomeSection(
+    modifier: Modifier = Modifier,
     @StringRes titleRes: Int? = null,
     titleString: String? = null,
-    modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
     Column(modifier) {

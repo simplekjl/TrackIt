@@ -35,11 +35,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
@@ -151,9 +149,6 @@ fun WeightValueElement(
     colorRes: Color,
     onClick: (String) -> Unit = {}
 ) {
-    val keyboardController = LocalSoftwareKeyboardController.current
-    val focusRequester = remember { FocusRequester() }
-
     Column(
         modifier = modifier
             .wrapContentWidth()
@@ -174,40 +169,6 @@ fun WeightValueElement(
                 .align(alignment = Alignment.CenterHorizontally),
             onClick = { onClick("") }
         )
-//        OutlinedTextField(
-//            modifier = Modifier
-//                .width(90.dp)
-//                .align(alignment = Alignment.CenterHorizontally)
-//                .focusRequester(focusRequester)
-//                .testTag("weightValue")
-//                .clearFocusOnKeyboardDismiss(),
-//            value = weight,
-//            onValueChange = {
-//                onClick(it)
-//                weight = it
-//            },
-//            placeholder = {
-//                Text(text = weight)
-//            },
-//            textStyle = TrackItTypography().h6.copy(textAlign = TextAlign.Center),
-//            colors = TextFieldDefaults.outlinedTextFieldColors(
-//                textColor = colorRes,
-//                focusedBorderColor = TrackItColors.mint,
-//                unfocusedBorderColor = Color.Transparent,
-//                backgroundColor = Color.Transparent,
-//                cursorColor = LocalContentColor.current.copy(alpha = LocalContentAlpha.current)
-//            ),
-//            maxLines = 1,
-//            singleLine = true,
-//            keyboardOptions = KeyboardOptions.Default.copy(
-//                keyboardType = KeyboardType.Number,
-//                imeAction = ImeAction.Done
-//            ),
-//            keyboardActions = KeyboardActions(onDone = {
-//                focusRequester.freeFocus()
-//                keyboardController?.hide()
-//            }),
-//        )
     }
 }
 

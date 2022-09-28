@@ -102,7 +102,7 @@ fun HomeScreen(
                 ColorChartSection(modifier = Modifier.fillMaxWidth())
             }
             Spacer(modifier = Modifier.height(16.dp))
-            HomeSection() {
+            HomeSection {
                 LinearChartProgress(
                     modifier = Modifier
                         .fillMaxWidth()

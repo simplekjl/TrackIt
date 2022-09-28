@@ -18,4 +18,7 @@
     <!-- Weight literals -->
     <string name="kg_format">%s kg</string>
     <string name="lb_format">%s lb</string>
+    <string name="update_weight">Update weight</string>
+    <string name="add_new_weight_title">Add new weight</string>
+    <string name="save_title">Save</string>
 </resources>

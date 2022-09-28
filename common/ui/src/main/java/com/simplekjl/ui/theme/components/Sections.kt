@@ -24,8 +24,13 @@ import java.util.Locale
 @Composable
 fun HomeSectionPreview() {
     TrackItTheme {
-        HomeSection(title = R.string.app_name) {
-            WeightDetailsSection(modifier = Modifier, currentWeight = 80.0, goalWeight = 65.0, startWeight = 90.0)
+        HomeSection(titleRes = R.string.app_name) {
+            WeightDetailsSection(
+                modifier = Modifier,
+                currentWeight = 80.0,
+                goalWeight = 65.0,
+                startWeight = 90.0
+            )
         }
     }
 }
@@ -33,18 +38,20 @@ fun HomeSectionPreview() {
 // -- Section for every part of the main screen
 @Composable
 fun HomeSection(
-    @StringRes title: Int?,
+    @StringRes titleRes: Int? = null,
+    titleString: String? = null,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
     Column(modifier) {
+        val title = if (titleRes != null) stringResource(id = titleRes) else titleString
         title?.let {
             Text(
-                stringResource(it).uppercase(Locale.getDefault()),
+                it.uppercase(Locale.getDefault()),
                 style = MaterialTheme.typography.h6,
                 modifier = Modifier
                     .paddingFromBaseline(top = 40.dp, bottom = 16.dp)
-                    .padding(horizontal = 16.dp,)
+                    .padding(horizontal = 16.dp)
             )
         }
         content() // calling the composable
@@ -55,7 +62,12 @@ fun HomeSection(
 @Composable
 fun WeightDetailsSectionPreview() {
     TrackItTheme {
-        WeightDetailsSection(modifier = Modifier, startWeight = 90.0, currentWeight = 74.0, goalWeight = 70.0)
+        WeightDetailsSection(
+            modifier = Modifier,
+            startWeight = 90.0,
+            currentWeight = 74.0,
+            goalWeight = 70.0
+        )
     }
 }
 
@@ -63,25 +75,31 @@ fun WeightDetailsSectionPreview() {
 fun WeightDetailsSection(
     modifier: Modifier,
     startWeight: Double,
+    startWeightClick: (String) -> Unit = {},
     currentWeight: Double,
-    goalWeight: Double
+    currentWeightClick: (String) -> Unit = {},
+    goalWeight: Double,
+    goalWeightClick: (String) -> Unit = {}
 ) {
 
     Row(modifier = modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
         WeightValueElement(
             metricNameRes = R.string.weight_start_label,
             weightValue = startWeight,
-            colorRes = TrackItColors.mid_blue
+            colorRes = TrackItColors.mid_blue,
+            onClick = startWeightClick
         )
         WeightValueElement(
             metricNameRes = R.string.weight_current_label,
             weightValue = currentWeight,
-            colorRes = TrackItColors.plum
+            colorRes = TrackItColors.plum,
+            onClick = currentWeightClick
         )
         WeightValueElement(
             metricNameRes = R.string.weight_goal_label,
             weightValue = goalWeight,
-            colorRes = TrackItColors.cucumber
+            colorRes = TrackItColors.cucumber,
+            onClick = goalWeightClick
         )
     }
 }
@@ -108,3 +126,5 @@ fun ColorChartSection(modifier: Modifier = Modifier) {
         )
     }
 }
+
+

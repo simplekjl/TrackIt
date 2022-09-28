@@ -88,7 +88,7 @@ fun HomeScreen(
                 )
         ) {
             Spacer(modifier = Modifier.height(16.dp))
-            HomeSection(title = null) {
+            HomeSection(titleString = startWeight.toString()) {
                 WeightDetailsSection(
                     modifier = Modifier,
                     startWeight = startWeight,
@@ -97,11 +97,11 @@ fun HomeScreen(
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))
-            HomeSection(title = null) {
+            HomeSection() {
                 ColorChartSection(modifier = Modifier.fillMaxWidth())
             }
             Spacer(modifier = Modifier.height(16.dp))
-            HomeSection(title = null) {
+            HomeSection() {
                 LinearChartProgress(
                     modifier = Modifier
                         .fillMaxWidth()

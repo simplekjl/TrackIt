@@ -153,7 +153,8 @@ fun WeightValueElement(
     modifier: Modifier = Modifier,
     @StringRes metricNameRes: Int,
     weightValue: Double,
-    colorRes: Color
+    colorRes: Color,
+    onClick: (String) -> Unit = {}
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = remember { FocusRequester() }
@@ -180,7 +181,10 @@ fun WeightValueElement(
                 .testTag("weightValue")
                 .clearFocusOnKeyboardDismiss(),
             value = weight,
-            onValueChange = { weight = it },
+            onValueChange = {
+                onClick(it)
+                weight = it
+            },
             placeholder = {
                 Text(text = weight)
             },

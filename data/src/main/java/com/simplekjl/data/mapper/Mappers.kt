@@ -1,8 +1,10 @@
 package com.simplekjl.data.mapper
 
 import com.simplekjl.data.model.MeasuresRaw
+import com.simplekjl.data.model.ProfileRaw
 import com.simplekjl.data.model.WeightRaw
 import com.simplekjl.domain.model.Measures
+import com.simplekjl.domain.model.Profile
 import com.simplekjl.domain.model.Weight
 
 fun Measures.toRaw(): MeasuresRaw {
@@ -87,4 +89,8 @@ fun WeightRaw.toModel(): Weight {
 
 fun Weight.toRaw(): WeightRaw {
     return WeightRaw(this.uid ?: 0, this.date, this.weight, this.note)
+}
+
+fun ProfileRaw.toModel(): Profile {
+    return Profile(this.uid, this.name, this.goalWeight, this.createdDate)
 }

@@ -1,6 +1,7 @@
 package com.simplekjl.trackit.framework
 
 import com.simplekjl.data.model.MeasuresRaw
+import com.simplekjl.data.model.ProfileRaw
 import com.simplekjl.data.model.WeightRaw
 import com.simplekjl.data.repository.LocalSource
 import com.simplekjl.trackit.framework.database.WeightDatabase
@@ -50,5 +51,9 @@ class LocalSourceImpl(private val database: WeightDatabase) : LocalSource {
 
     override fun updateMeasure(measuresRaw: MeasuresRaw) {
         database.getWeightDao().updateMeasure(measuresRaw)
+    }
+
+    override fun getProfile(): ProfileRaw {
+        return database.getProfileDao().getProfile()
     }
 }

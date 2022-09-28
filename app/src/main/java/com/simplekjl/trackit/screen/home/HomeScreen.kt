@@ -11,16 +11,19 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.simplekjl.domain.model.Weight
 import com.simplekjl.domain.usecase.NewWeightUseCase
 import com.simplekjl.trackit.R
 import com.simplekjl.ui.theme.SampleData
 import com.simplekjl.ui.theme.base.TrackItColors
-import com.simplekjl.ui.theme.base.TrackItTheme
 import com.simplekjl.ui.theme.components.AddDeleteFabButton
 import com.simplekjl.ui.theme.components.ColorChartSection
 import com.simplekjl.ui.theme.components.HomeSection
@@ -31,23 +34,26 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent.inject
 
-@Preview
-@Composable
-fun HomeScreenPReview() {
-    TrackItTheme {
-        HomeScreen(startWeight = 90.0, currentWeight = 80.4, goalWeight = 70.0)
-    }
-}
-
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    startWeight: Double,
-    currentWeight: Double,
-    goalWeight: Double
+    homeViewModel: HomeViewModel
 ) {
     val coroutineScope = rememberCoroutineScope()
     val useCase: NewWeightUseCase by inject(NewWeightUseCase::class.java)
+    val weightsState = homeViewModel.weights.observeAsState()
+    val profile = homeViewModel.profile.observeAsState()
+    var startWeight by rememberSaveable { mutableStateOf(0.0) }
+    var currentWeight by rememberSaveable { mutableStateOf(0.0) }
+    var goalWeight by rememberSaveable { mutableStateOf(0.0) }
+    if (weightsState.value != null && profile.value != null) {
+        if (weightsState.value?.isNotEmpty() == true) {
+            startWeight = weightsState.value?.first()?.weight ?: 0.0
+            currentWeight = weightsState.value?.last()?.weight ?: 0.0
+        }
+        goalWeight = profile.value?.goalWeight ?: 0.0
+    }
+
     Scaffold(
         topBar = {
             TrackItMainToolbar(
@@ -90,7 +96,7 @@ fun HomeScreen(
                     goalWeight = goalWeight
                 )
             }
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
             HomeSection(title = null) {
                 ColorChartSection(modifier = Modifier.fillMaxWidth())
             }

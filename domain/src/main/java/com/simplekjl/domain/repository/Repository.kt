@@ -1,6 +1,7 @@
 package com.simplekjl.domain.repository
 
 import com.simplekjl.domain.model.Measures
+import com.simplekjl.domain.model.Profile
 import com.simplekjl.domain.model.Weight
 
 interface Repository {
@@ -16,4 +17,5 @@ interface Repository {
     fun insertAllMeasures(vararg measures: Measures)
     fun deleteMeasure(measures: Measures)
     fun updateMeasure(measures: Measures)
+    fun getProfile(): Profile
 }

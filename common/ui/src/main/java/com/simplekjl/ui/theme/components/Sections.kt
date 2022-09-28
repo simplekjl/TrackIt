@@ -41,10 +41,10 @@ fun HomeSection(
         title?.let {
             Text(
                 stringResource(it).uppercase(Locale.getDefault()),
-                style = MaterialTheme.typography.h2,
+                style = MaterialTheme.typography.h6,
                 modifier = Modifier
-                    .paddingFromBaseline(top = 40.dp, bottom = 8.dp)
-                    .padding(horizontal = 16.dp)
+                    .paddingFromBaseline(top = 40.dp, bottom = 16.dp)
+                    .padding(horizontal = 16.dp,)
             )
         }
         content() // calling the composable

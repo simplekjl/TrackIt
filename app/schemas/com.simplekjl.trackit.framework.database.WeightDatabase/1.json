@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "127ce1236beb0b123fbeda9f9c4055a4",
+    "identityHash": "62a646f90b22b6e2080198e8fea129fe",
     "entities": [
       {
         "tableName": "weight",
@@ -43,8 +43,8 @@
         "foreignKeys": []
       },
       {
-        "tableName": "MeasuresRaw",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`entryUid` INTEGER NOT NULL, `date` INTEGER NOT NULL, `chest` REAL NOT NULL, `leftArm` REAL NOT NULL, `rightArm` REAL NOT NULL, `waist` REAL NOT NULL, `hips` REAL NOT NULL, `leftThigh` REAL NOT NULL, `rightThigh` REAL NOT NULL, `leftCalf` REAL NOT NULL, `rightCalf` REAL NOT NULL, PRIMARY KEY(`entryUid`, `date`))",
+        "tableName": "measures",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`entryUid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `date` INTEGER NOT NULL, `chest` REAL NOT NULL, `leftArm` REAL NOT NULL, `rightArm` REAL NOT NULL, `waist` REAL NOT NULL, `hips` REAL NOT NULL, `leftThigh` REAL NOT NULL, `rightThigh` REAL NOT NULL, `leftCalf` REAL NOT NULL, `rightCalf` REAL NOT NULL)",
         "fields": [
           {
             "fieldPath": "entryUid",
@@ -115,10 +115,47 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "entryUid",
-            "date"
+            "entryUid"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "profile",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `goalWeight` REAL NOT NULL, `createdDate` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "goalWeight",
+            "columnName": "goalWeight",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdDate",
+            "columnName": "createdDate",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "uid"
+          ],
+          "autoGenerate": true
         },
         "indices": [],
         "foreignKeys": []
@@ -127,7 +164,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '127ce1236beb0b123fbeda9f9c4055a4')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '62a646f90b22b6e2080198e8fea129fe')"
     ]
   }
 }

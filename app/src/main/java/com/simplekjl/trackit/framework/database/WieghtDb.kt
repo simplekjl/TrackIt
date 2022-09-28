@@ -13,7 +13,11 @@ import com.simplekjl.data.model.ProfileRaw
 import com.simplekjl.data.model.WeightRaw
 import com.simplekjl.trackit.framework.database.converters.Converters
 
-@Database(entities = [WeightRaw::class, MeasuresRaw::class], version = 1, exportSchema = true)
+@Database(
+    entities = [WeightRaw::class, MeasuresRaw::class, ProfileRaw::class],
+    version = 1,
+    exportSchema = true
+)
 @TypeConverters(Converters::class)
 abstract class WeightDatabase : RoomDatabase() {
 

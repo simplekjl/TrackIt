@@ -23,5 +23,5 @@ val mainModule = module {
         database.getWeightDao()
     }
     factory<LocalSource> { LocalSourceImpl(get()) }
-    factory { HomeViewModel(get(), get()) }
+    factory { HomeViewModel(get(), get(), get()) }
 }

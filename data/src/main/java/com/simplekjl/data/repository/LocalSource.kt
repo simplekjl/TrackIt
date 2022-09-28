@@ -1,6 +1,7 @@
 package com.simplekjl.data.repository
 
 import com.simplekjl.data.model.MeasuresRaw
+import com.simplekjl.data.model.ProfileRaw
 import com.simplekjl.data.model.WeightRaw
 
 interface LocalSource {
@@ -16,4 +17,5 @@ interface LocalSource {
     fun insertAllMeasures(vararg measures: MeasuresRaw)
     fun deleteMeasure(measuresRaw: MeasuresRaw)
     fun updateMeasure(measuresRaw: MeasuresRaw)
+    fun getProfile(): ProfileRaw
 }

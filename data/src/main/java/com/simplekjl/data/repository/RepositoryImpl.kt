@@ -4,6 +4,7 @@ import com.simplekjl.data.mapper.toMeasureModel
 import com.simplekjl.data.mapper.toModel
 import com.simplekjl.data.mapper.toRaw
 import com.simplekjl.domain.model.Measures
+import com.simplekjl.domain.model.Profile
 import com.simplekjl.domain.model.Weight
 import com.simplekjl.domain.repository.Repository
 
@@ -56,5 +57,9 @@ class RepositoryImpl(
 
     override fun updateMeasure(measures: Measures) {
         localSource.updateMeasure(measures.toRaw())
+    }
+
+    override fun getProfile(): Profile {
+        return localSource.getProfile().toModel()
     }
 }

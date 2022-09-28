@@ -4,7 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.simplekjl.trackit.screen.home.HomeScreen
+import com.simplekjl.trackit.screen.home.HomeViewModel
 import com.simplekjl.ui.theme.base.TrackItTheme
+import org.koin.androidx.compose.viewModel
 
 class MainActivity : ComponentActivity() {
 
@@ -12,7 +14,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TrackItTheme {
-                HomeScreen(startWeight = 90.0, currentWeight = 80.4, goalWeight = 70.0)
+                val homeViewModel: HomeViewModel by viewModel()
+                HomeScreen(homeViewModel = homeViewModel)
             }
         }
     }

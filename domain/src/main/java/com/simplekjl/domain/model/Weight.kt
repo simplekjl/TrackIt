@@ -20,3 +20,10 @@ data class Measures(
     val leftCalf: Double,
     val rightCalf: Double
 )
+
+data class Profile(
+    val uid: Int,
+    val name: String,
+    val goalWeight: Double,
+    val createdDate: Long
+)

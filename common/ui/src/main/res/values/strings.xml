@@ -15,4 +15,7 @@
     <!-- Content descriptions -->
     <string name="menu_setting_content_description">Settings</string>
     <string name="weight_add_new_measurement">Add new weight measurement</string>
+    <!-- Weight literals -->
+    <string name="kg_format">%s kg</string>
+    <string name="lb_format">%s lb</string>
 </resources>

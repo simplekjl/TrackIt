@@ -14,20 +14,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -35,25 +29,19 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -67,7 +55,6 @@ import com.simplekjl.ui.theme.SampleData
 import com.simplekjl.ui.theme.base.TrackItColors
 import com.simplekjl.ui.theme.base.TrackItTheme
 import com.simplekjl.ui.theme.base.TrackItTypography
-import com.simplekjl.ui.theme.clearFocusOnKeyboardDismiss
 
 @Preview
 @Composable
@@ -133,32 +120,39 @@ fun WeightValueElementTest() {
             modifier = Modifier.wrapContentWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
+            Spacer(modifier = Modifier.padding(16.dp))
             WeightValueElement(
                 metricNameRes = R.string.weight_current_label,
+                pluralsRes = R.string.kg_format,
                 weightValue = 82.0,
                 colorRes = TrackItColors.plum,
             )
+            Spacer(modifier = Modifier.padding(16.dp))
             WeightValueElement(
                 metricNameRes = R.string.weight_goal_label,
+                pluralsRes = R.string.kg_format,
                 weightValue = 74.0,
                 colorRes = TrackItColors.cucumber
             )
+            Spacer(modifier = Modifier.padding(16.dp))
         }
     }
 }
 
+/* TextField won't work out of the box while composing
+doesn't allow to populate the value in compose time*/
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun WeightValueElement(
     modifier: Modifier = Modifier,
     @StringRes metricNameRes: Int,
+    @StringRes pluralsRes: Int,
     weightValue: Double,
     colorRes: Color,
     onClick: (String) -> Unit = {}
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = remember { FocusRequester() }
-    var weight by remember { mutableStateOf(weightValue.toString()) }
 
     Column(
         modifier = modifier
@@ -173,40 +167,47 @@ fun WeightValueElement(
                 .align(alignment = Alignment.CenterHorizontally)
 
         )
-        OutlinedTextField(
+        ClickableText(
+            text = AnnotatedString(stringResource(id = pluralsRes, weightValue.toString())),
+            style = TrackItTypography().h6.copy(colorRes),
             modifier = Modifier
-                .width(90.dp)
-                .align(alignment = Alignment.CenterHorizontally)
-                .focusRequester(focusRequester)
-                .testTag("weightValue")
-                .clearFocusOnKeyboardDismiss(),
-            value = weight,
-            onValueChange = {
-                onClick(it)
-                weight = it
-            },
-            placeholder = {
-                Text(text = weight)
-            },
-            textStyle = TrackItTypography().h6.copy(textAlign = TextAlign.Center),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                textColor = colorRes,
-                focusedBorderColor = TrackItColors.mint,
-                unfocusedBorderColor = Color.Transparent,
-                backgroundColor = Color.Transparent,
-                cursorColor = LocalContentColor.current.copy(alpha = LocalContentAlpha.current)
-            ),
-            maxLines = 1,
-            singleLine = true,
-            keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = KeyboardType.Number,
-                imeAction = ImeAction.Done
-            ),
-            keyboardActions = KeyboardActions(onDone = {
-                focusRequester.freeFocus()
-                keyboardController?.hide()
-            }),
+                .align(alignment = Alignment.CenterHorizontally),
+            onClick = { onClick("") }
         )
+//        OutlinedTextField(
+//            modifier = Modifier
+//                .width(90.dp)
+//                .align(alignment = Alignment.CenterHorizontally)
+//                .focusRequester(focusRequester)
+//                .testTag("weightValue")
+//                .clearFocusOnKeyboardDismiss(),
+//            value = weight,
+//            onValueChange = {
+//                onClick(it)
+//                weight = it
+//            },
+//            placeholder = {
+//                Text(text = weight)
+//            },
+//            textStyle = TrackItTypography().h6.copy(textAlign = TextAlign.Center),
+//            colors = TextFieldDefaults.outlinedTextFieldColors(
+//                textColor = colorRes,
+//                focusedBorderColor = TrackItColors.mint,
+//                unfocusedBorderColor = Color.Transparent,
+//                backgroundColor = Color.Transparent,
+//                cursorColor = LocalContentColor.current.copy(alpha = LocalContentAlpha.current)
+//            ),
+//            maxLines = 1,
+//            singleLine = true,
+//            keyboardOptions = KeyboardOptions.Default.copy(
+//                keyboardType = KeyboardType.Number,
+//                imeAction = ImeAction.Done
+//            ),
+//            keyboardActions = KeyboardActions(onDone = {
+//                focusRequester.freeFocus()
+//                keyboardController?.hide()
+//            }),
+//        )
     }
 }
 

@@ -14,8 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -43,13 +43,14 @@ fun HomeScreen(
     val useCase: NewWeightUseCase by inject(NewWeightUseCase::class.java)
     val weightsState = homeViewModel.weights.observeAsState()
     val profile = homeViewModel.profile.observeAsState()
-    var startWeight by rememberSaveable { mutableStateOf(0.0) }
-    var currentWeight by rememberSaveable { mutableStateOf(0.0) }
-    var goalWeight by rememberSaveable { mutableStateOf(0.0) }
+    val initialWeight = Weight(0, date = System.currentTimeMillis(), 0.0, null)
+    var startWeight by remember { mutableStateOf(initialWeight) }
+    var currentWeight by remember { mutableStateOf(initialWeight) }
+    var goalWeight by remember { mutableStateOf(0.0) }
     if (weightsState.value != null && profile.value != null) {
         if (weightsState.value?.isNotEmpty() == true) {
-            startWeight = weightsState.value?.first()?.weight ?: 0.0
-            currentWeight = weightsState.value?.last()?.weight ?: 0.0
+            startWeight = weightsState.value?.first() ?: initialWeight
+            currentWeight = weightsState.value?.last() ?: initialWeight
         }
         goalWeight = profile.value?.goalWeight ?: 0.0
     }
@@ -88,16 +89,16 @@ fun HomeScreen(
                 )
         ) {
             Spacer(modifier = Modifier.height(16.dp))
-            HomeSection(titleString = startWeight.toString()) {
+            HomeSection {
                 WeightDetailsSection(
                     modifier = Modifier,
-                    startWeight = startWeight,
-                    currentWeight = currentWeight,
+                    startWeight = startWeight.weight,
+                    currentWeight = currentWeight.weight,
                     goalWeight = goalWeight
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))
-            HomeSection() {
+            HomeSection {
                 ColorChartSection(modifier = Modifier.fillMaxWidth())
             }
             Spacer(modifier = Modifier.height(16.dp))

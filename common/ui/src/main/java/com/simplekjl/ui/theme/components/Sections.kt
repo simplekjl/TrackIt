@@ -87,16 +87,19 @@ fun WeightDetailsSection(
             metricNameRes = R.string.weight_start_label,
             weightValue = startWeight,
             colorRes = TrackItColors.mid_blue,
-            onClick = startWeightClick
+            onClick = startWeightClick,
+            pluralsRes = R.string.kg_format
         )
         WeightValueElement(
             metricNameRes = R.string.weight_current_label,
+            pluralsRes = R.string.kg_format,
             weightValue = currentWeight,
             colorRes = TrackItColors.plum,
             onClick = currentWeightClick
         )
         WeightValueElement(
             metricNameRes = R.string.weight_goal_label,
+            pluralsRes = R.string.kg_format,
             weightValue = goalWeight,
             colorRes = TrackItColors.cucumber,
             onClick = goalWeightClick
@@ -126,5 +129,3 @@ fun ColorChartSection(modifier: Modifier = Modifier) {
         )
     }
 }
-
-

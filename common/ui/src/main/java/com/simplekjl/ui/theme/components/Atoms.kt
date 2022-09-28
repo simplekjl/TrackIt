@@ -1,6 +1,8 @@
 package com.simplekjl.ui.theme.components
 
-import androidx.activity.compose.BackHandler
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -11,7 +13,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -32,9 +33,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -127,10 +130,13 @@ fun TrackItMainToolbar(
 @Composable
 fun WeightValueElementTest() {
     TrackItTheme {
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+        Row(
+            modifier = Modifier.wrapContentWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
             WeightValueElement(
                 metricNameRes = R.string.weight_current_label,
-                weightValue = 84.0,
+                weightValue = 82.0,
                 colorRes = TrackItColors.plum,
             )
             WeightValueElement(
@@ -154,9 +160,7 @@ fun WeightValueElement(
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
     var weight by remember { mutableStateOf(weightValue.toString()) }
-    BackHandler(enabled = true) {
-        hideKeyboardAndClearFocus(focusRequester, focusManager)
-    }
+    // TODO Add backpress with the view model to clear focus in the future
     Column(
         modifier = modifier
             .wrapContentWidth()
@@ -166,7 +170,9 @@ fun WeightValueElement(
         Text(
             text = stringResource(id = metricNameRes),
             style = TrackItTypography().h5,
-            modifier = Modifier.paddingFromBaseline(top = 16.dp)
+            modifier = Modifier
+                .align(alignment = Alignment.CenterHorizontally)
+
         )
         OutlinedTextField(
             modifier = Modifier
@@ -294,4 +300,29 @@ fun LinearChartProgress(
             linearChart.invalidate()
         }
     )
+}
+
+@Composable
+fun BackPressHandler(
+    backPressedDispatcher: OnBackPressedDispatcher? =
+        LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher,
+    onBackPressed: () -> Unit
+) {
+    val currentOnBackPressed by rememberUpdatedState(newValue = onBackPressed)
+
+    val backCallback = remember {
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                currentOnBackPressed()
+            }
+        }
+    }
+
+    DisposableEffect(key1 = backPressedDispatcher) {
+        backPressedDispatcher?.addCallback(backCallback)
+
+        onDispose {
+            backCallback.remove()
+        }
+    }
 }

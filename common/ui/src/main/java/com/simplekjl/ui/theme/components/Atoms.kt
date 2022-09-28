@@ -48,7 +48,6 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -68,7 +67,7 @@ import com.simplekjl.ui.theme.SampleData
 import com.simplekjl.ui.theme.base.TrackItColors
 import com.simplekjl.ui.theme.base.TrackItTheme
 import com.simplekjl.ui.theme.base.TrackItTypography
-import com.simplekjl.ui.theme.hideKeyboardAndClearFocus
+import com.simplekjl.ui.theme.clearFocusOnKeyboardDismiss
 
 @Preview
 @Composable
@@ -158,9 +157,8 @@ fun WeightValueElement(
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = remember { FocusRequester() }
-    val focusManager = LocalFocusManager.current
     var weight by remember { mutableStateOf(weightValue.toString()) }
-    // TODO Add backpress with the view model to clear focus in the future
+
     Column(
         modifier = modifier
             .wrapContentWidth()
@@ -179,7 +177,8 @@ fun WeightValueElement(
                 .width(90.dp)
                 .align(alignment = Alignment.CenterHorizontally)
                 .focusRequester(focusRequester)
-                .testTag("weightValue"),
+                .testTag("weightValue")
+                .clearFocusOnKeyboardDismiss(),
             value = weight,
             onValueChange = { weight = it },
             placeholder = {
@@ -200,7 +199,8 @@ fun WeightValueElement(
                 imeAction = ImeAction.Done
             ),
             keyboardActions = KeyboardActions(onDone = {
-                hideKeyboardAndClearFocus(focusRequester, focusManager, keyboardController)
+                focusRequester.freeFocus()
+                keyboardController?.hide()
             }),
         )
     }

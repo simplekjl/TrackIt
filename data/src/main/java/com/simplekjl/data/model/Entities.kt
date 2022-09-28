@@ -12,8 +12,20 @@ data class WeightRaw(
     @ColumnInfo(name = "note") val note: String?
 )
 
+@Entity(tableName = "profile")
+data class ProfileRaw(
+    @PrimaryKey(autoGenerate = true)
+    val uid: Int,
+    @ColumnInfo(name = "name")
+    val name: String,
+    @ColumnInfo(name = "goalWeight")
+    val goalWeight: Double,
+    @ColumnInfo(name = "createdDate")
+    val createdDate: Long
+)
+
 // User should be able to also create measurements without tracking weight
-@Entity(primaryKeys = ["entryUid", "date"])
+@Entity(tableName = "measures", primaryKeys = ["entryUid", "date"])
 data class MeasuresRaw(
     val entryUid: Int,
     val date: Long,

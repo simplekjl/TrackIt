@@ -9,6 +9,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.Update
 import com.simplekjl.data.model.MeasuresRaw
+import com.simplekjl.data.model.ProfileRaw
 import com.simplekjl.data.model.WeightRaw
 import com.simplekjl.trackit.framework.database.converters.Converters
 
@@ -17,6 +18,13 @@ import com.simplekjl.trackit.framework.database.converters.Converters
 abstract class WeightDatabase : RoomDatabase() {
 
     abstract fun getWeightDao(): WeightDao
+    abstract fun getProfileDao(): ProfileDao
+}
+
+@Dao
+interface ProfileDao {
+    @Query("SELECT * FROM profile")
+    fun getProfile(): ProfileRaw
 }
 
 @Dao
@@ -39,13 +47,13 @@ interface WeightDao {
     @Update
     fun updateWeight(weightRaw: WeightRaw)
 
-    @Query("SELECT * FROM measuresraw")
+    @Query("SELECT * FROM measures")
     fun getAllMeasures(): List<MeasuresRaw>
 
-    @Query("SELECT * FROM measuresraw WHERE date IS :date")
+    @Query("SELECT * FROM measures WHERE date IS :date")
     fun getMeasureByDate(date: Long): MeasuresRaw
 
-    @Query("SELECT * FROM measuresraw WHERE date BETWEEN :startDate AND :endDate")
+    @Query("SELECT * FROM measures WHERE date BETWEEN :startDate AND :endDate")
     fun getAllMeasurementsFromTo(startDate: Long?, endDate: Long?): List<MeasuresRaw>
 
     @Insert

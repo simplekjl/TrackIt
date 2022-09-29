@@ -1,8 +1,11 @@
 package com.simplekjl.ui.theme
 
+import android.content.Context
+import android.content.ContextWrapper
 import android.graphics.Rect
 import android.view.View
 import android.view.ViewTreeObserver
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
@@ -66,4 +69,10 @@ fun Modifier.clearFocusOnKeyboardDismiss(): Modifier = composed {
             }
         }
     }
+}
+
+fun Context.getActivity(): AppCompatActivity? = when (this) {
+    is AppCompatActivity -> this
+    is ContextWrapper -> baseContext.getActivity()
+    else -> null
 }

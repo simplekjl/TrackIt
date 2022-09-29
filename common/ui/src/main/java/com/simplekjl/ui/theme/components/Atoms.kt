@@ -18,19 +18,27 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.ModalBottomSheetState
+import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -53,20 +61,40 @@ import com.simplekjl.ui.theme.SampleData
 import com.simplekjl.ui.theme.base.TrackItColors
 import com.simplekjl.ui.theme.base.TrackItTheme
 import com.simplekjl.ui.theme.base.TrackItTypography
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
 fun AddDeleteFabButtonPreview() {
+    val sheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+    )
+
+    val showModalSheet = rememberSaveable {
+        mutableStateOf(false)
+    }
     TrackItTheme {
-        AddDeleteFabButton(onClick = {})
+        AddDeleteFabButton(onClick = {}, sheetState = sheetState, showModalSheet = showModalSheet)
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun AddDeleteFabButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
+fun AddDeleteFabButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    sheetState: ModalBottomSheetState,
+    showModalSheet: MutableState<Boolean>
+) {
+    val scope = rememberCoroutineScope()
     FloatingActionButton(
         modifier = modifier,
-        onClick = onClick,
+        onClick = {
+            showModalSheet.value = !showModalSheet.value
+            scope.launch { sheetState.show() }
+            onClick.invoke()
+        },
         backgroundColor = TrackItColors.blue,
         content = {
             Icon(

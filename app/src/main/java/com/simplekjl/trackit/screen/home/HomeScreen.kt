@@ -9,22 +9,29 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.fragment.app.FragmentManager
 import com.simplekjl.domain.model.Weight
 import com.simplekjl.domain.usecase.NewWeightUseCase
 import com.simplekjl.trackit.R
 import com.simplekjl.ui.theme.SampleData
 import com.simplekjl.ui.theme.base.TrackItColors
+import com.simplekjl.ui.theme.clearFocusOnKeyboardDismiss
 import com.simplekjl.ui.theme.components.AddDeleteFabButton
+import com.simplekjl.ui.theme.components.BottomSheet
 import com.simplekjl.ui.theme.components.ColorChartSection
 import com.simplekjl.ui.theme.components.HomeSection
 import com.simplekjl.ui.theme.components.LinearChartProgress
@@ -34,12 +41,19 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent.inject
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    homeViewModel: HomeViewModel
+    homeViewModel: HomeViewModel,
 ) {
     val coroutineScope = rememberCoroutineScope()
+    val sheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+    )
+    val showModalSheet = rememberSaveable {
+        mutableStateOf(false)
+    }
     val useCase: NewWeightUseCase by inject(NewWeightUseCase::class.java)
     val weightsState = homeViewModel.weights.observeAsState()
     val profile = homeViewModel.profile.observeAsState()
@@ -54,66 +68,76 @@ fun HomeScreen(
         }
         goalWeight = profile.value?.goalWeight ?: 0.0
     }
-
-    Scaffold(
-        topBar = {
-            TrackItMainToolbar(
-                titleRes = R.string.app_name,
-                menuSettingsDescRes = R.string.menu_settings_action_description
-            )
-        },
-        modifier = modifier.fillMaxSize(),
-        floatingActionButton = {
-            AddDeleteFabButton(onClick = {
-                coroutineScope.launch {
-                    useCase(
-                        Weight(
-                            date = System.currentTimeMillis(),
-                            weight = 74.0,
-                            note = null
-                        )
-                    ).first()
+    BottomSheet(
+        modifier = Modifier.clearFocusOnKeyboardDismiss(),
+        weight = initialWeight,
+        modalBottomSheetState = sheetState,
+        isSheetOpened = showModalSheet
+    ) {
+        Scaffold(
+            topBar = {
+                TrackItMainToolbar(
+                    titleRes = R.string.app_name,
+                    menuSettingsDescRes = R.string.menu_settings_action_description
+                )
+            },
+            modifier = modifier.fillMaxSize(),
+            floatingActionButton = {
+                showModalSheet.value = true
+                AddDeleteFabButton(
+                    onClick = {
+                        coroutineScope.launch {
+                            useCase(
+                                Weight(
+                                    date = System.currentTimeMillis(),
+                                    weight = 74.0,
+                                    note = null
+                                )
+                            ).first()
+                        }
+                    },
+                    sheetState = sheetState, showModalSheet = showModalSheet
+                )
+            }
+        ) { paddingValues ->
+            Column(
+                modifier
+                    .verticalScroll(rememberScrollState())
+                    .wrapContentHeight()
+                    .padding(
+                        top = paddingValues.calculateTopPadding(),
+                        start = 16.dp,
+                        end = 16.dp,
+                        bottom = 8.dp
+                    )
+            ) {
+                Spacer(modifier = Modifier.height(16.dp))
+                HomeSection {
+                    WeightDetailsSection(
+                        modifier = Modifier,
+                        startWeight = startWeight.weight,
+                        currentWeight = currentWeight.weight,
+                        goalWeight = goalWeight
+                    )
                 }
-            })
-        }
-    ) { paddingValues ->
-        Column(
-            modifier
-                .verticalScroll(rememberScrollState())
-                .wrapContentHeight()
-                .padding(
-                    top = paddingValues.calculateTopPadding(),
-                    start = 16.dp,
-                    end = 16.dp,
-                    bottom = 8.dp
-                )
-        ) {
-            Spacer(modifier = Modifier.height(16.dp))
-            HomeSection {
-                WeightDetailsSection(
-                    modifier = Modifier,
-                    startWeight = startWeight.weight,
-                    currentWeight = currentWeight.weight,
-                    goalWeight = goalWeight
-                )
-            }
-            Spacer(modifier = Modifier.height(8.dp))
-            HomeSection {
-                ColorChartSection(modifier = Modifier.fillMaxWidth())
+                Spacer(modifier = Modifier.height(8.dp))
+                HomeSection {
+                    ColorChartSection(modifier = Modifier.fillMaxWidth())
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                HomeSection {
+                    LinearChartProgress(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(500.dp),
+                        weightValues = SampleData.entries,
+                        topLimitLabel = com.simplekjl.ui.R.string.weight_progress_label,
+                        bottomLimitLabel = com.simplekjl.ui.R.string.weight_progress_label,
+                        lineColor = TrackItColors.cucumber
+                    )
+                }
             }
             Spacer(modifier = Modifier.height(16.dp))
-            HomeSection {
-                LinearChartProgress(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(500.dp),
-                    weightValues = SampleData.entries,
-                    topLimitLabel = com.simplekjl.ui.R.string.weight_progress_label,
-                    bottomLimitLabel = com.simplekjl.ui.R.string.weight_progress_label,
-                    lineColor = TrackItColors.cucumber
-                )
-            }
         }
-        Spacer(modifier = Modifier.height(16.dp))
     }
 }

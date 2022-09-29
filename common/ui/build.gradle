@@ -36,6 +36,9 @@ dependencies {
     // Used for displaying Preview
     implementation ComposeLibraries.activity
 
+    implementation AndroidxLibraries.fragmentKtx
+    implementation GoogleLibraries.material
+
     implementation Libraries.MPchart
     androidTestImplementation ComposeLibraries.uiTestJunit4
     testImplementation ComposeLibraries.uiTestJunit4
@@ -46,5 +49,5 @@ dependencies {
     // remove in the future
     debugImplementation "androidx.customview:customview-poolingcontainer:1.0.0"
     debugImplementation "androidx.customview:customview:1.2.0-alpha02"
-
+    implementation "io.github.vanpra.compose-material-dialogs:core:0.8.1-rc"
 }

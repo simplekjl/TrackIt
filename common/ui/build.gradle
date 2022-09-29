@@ -49,5 +49,6 @@ dependencies {
     // remove in the future
     debugImplementation "androidx.customview:customview-poolingcontainer:1.0.0"
     debugImplementation "androidx.customview:customview:1.2.0-alpha02"
-    implementation "io.github.vanpra.compose-material-dialogs:core:0.8.1-rc"
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.0'
+    implementation "io.github.vanpra.compose-material-dialogs:datetime:0.8.1-rc"
 }

@@ -162,8 +162,9 @@ dependencies {
 
     coreLibraryDesugaring Libraries.desugarJdkLibs
 
-    debugImplementation "androidx.customview:customview:1.2.0-alpha01"
+    debugImplementation "androidx.customview:customview:1.2.0-alpha02"
     debugImplementation "androidx.customview:customview-poolingcontainer:1.0.0"
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.17.0"
     implementation "com.google.accompanist:accompanist-swiperefresh:0.26.3-beta"
+
 }

@@ -18,12 +18,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.fragment.app.FragmentManager
 import com.simplekjl.domain.model.Weight
 import com.simplekjl.domain.usecase.NewWeightUseCase
 import com.simplekjl.trackit.R
@@ -37,8 +35,6 @@ import com.simplekjl.ui.theme.components.HomeSection
 import com.simplekjl.ui.theme.components.LinearChartProgress
 import com.simplekjl.ui.theme.components.TrackItMainToolbar
 import com.simplekjl.ui.theme.components.WeightDetailsSection
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent.inject
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -47,7 +43,6 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     homeViewModel: HomeViewModel,
 ) {
-    val coroutineScope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
     )
@@ -61,6 +56,7 @@ fun HomeScreen(
     var startWeight by remember { mutableStateOf(initialWeight) }
     var currentWeight by remember { mutableStateOf(initialWeight) }
     var goalWeight by remember { mutableStateOf(0.0) }
+
     if (weightsState.value != null && profile.value != null) {
         if (weightsState.value?.isNotEmpty() == true) {
             startWeight = weightsState.value?.first() ?: initialWeight
@@ -85,17 +81,6 @@ fun HomeScreen(
             floatingActionButton = {
                 showModalSheet.value = true
                 AddDeleteFabButton(
-                    onClick = {
-                        coroutineScope.launch {
-                            useCase(
-                                Weight(
-                                    date = System.currentTimeMillis(),
-                                    weight = 74.0,
-                                    note = null
-                                )
-                            ).first()
-                        }
-                    },
                     sheetState = sheetState, showModalSheet = showModalSheet
                 )
             }

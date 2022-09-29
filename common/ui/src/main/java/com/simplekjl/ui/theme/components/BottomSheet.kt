@@ -42,7 +42,6 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -52,14 +51,15 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.android.material.datepicker.MaterialDatePicker
 import com.simplekjl.domain.model.Weight
 import com.simplekjl.ui.R
 import com.simplekjl.ui.theme.base.MaterialTheme
 import com.simplekjl.ui.theme.base.TrackItTheme
 import com.simplekjl.ui.theme.base.TrackItTypography
 import com.simplekjl.ui.theme.clearFocusOnKeyboardDismiss
-import com.simplekjl.ui.theme.getActivity
+import com.vanpra.composematerialdialogs.MaterialDialog
+import com.vanpra.composematerialdialogs.datetime.date.datepicker
+import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -135,10 +135,24 @@ fun WeightEntryContent(
 ) {
     val weight = rememberSaveable { mutableStateOf(weightModel.weight.toString()) }
     val date = rememberSaveable { mutableStateOf(LocalDate.now()) }
-    val activity = LocalContext.current.getActivity()
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = remember { FocusRequester() }
-    val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+    val buttonFocusRequester = remember { FocusRequester() }
+    val formatter = DateTimeFormatter.ofPattern(stringResource(R.string.date_dd_mm_yyyy_pattern))
+    val dialogState = rememberMaterialDialogState()
+
+    MaterialDialog(
+        dialogState = dialogState,
+        buttons = {
+            positiveButton(stringResource(R.string.ok_label))
+            negativeButton(stringResource(R.string.cancel_label))
+        }
+    ) {
+        datepicker { result ->
+            date.value = result
+            buttonFocusRequester.freeFocus()
+        }
+    }
     Surface(
         modifier = modifier
             .wrapContentHeight()
@@ -170,7 +184,6 @@ fun WeightEntryContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(alignment = Alignment.CenterHorizontally)
-                    .focusRequester(focusRequester)
                     .testTag("weightValue")
                     .clearFocusOnKeyboardDismiss(),
                 value = weight.value,
@@ -204,22 +217,18 @@ fun WeightEntryContent(
                     .align(alignment = Alignment.CenterHorizontally)
                     .focusRequester(focusRequester)
                     .onFocusChanged {
-                        activity?.let {
-                            val picker = MaterialDatePicker.Builder
-                                .datePicker()
-                                .build()
-                            picker.show(it.supportFragmentManager, picker.toString())
-                            picker.addOnPositiveButtonClickListener {
-                                date.value = LocalDate.ofEpochDay(it)
-                            }
+                        focusRequester.freeFocus()
+                        if (it.isFocused) {
+                            dialogState.show()
+                        }
+                        if (!it.hasFocus) {
+                            buttonFocusRequester.requestFocus()
                         }
                     }
                     .testTag("dateValue")
                     .clearFocusOnKeyboardDismiss(),
                 value = date.value.format(formatter),
-                onValueChange = {
-                    date.value = LocalDate.parse(it)
-                },
+                onValueChange = {},
                 textStyle = TrackItTypography().h6.copy(textAlign = TextAlign.Center),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = MaterialTheme.colors.primary,
@@ -227,42 +236,30 @@ fun WeightEntryContent(
                     backgroundColor = Color.Transparent,
                     cursorColor = LocalContentColor.current.copy(alpha = LocalContentAlpha.current)
                 ),
-                leadingIcon = {
+                trailingIcon = {
                     IconButton(
                         modifier = Modifier,
                         content = {
                             Icon(
-                                painter = painterResource(id = android.R.drawable.ic_menu_my_calendar),
+                                painter = painterResource(id = R.drawable.ic_calendar),
                                 null
                             )
                         },
                         onClick = {
-                            activity?.let {
-                                val picker = MaterialDatePicker.Builder.datePicker().build()
-                                picker.show(activity.supportFragmentManager, picker.toString())
-                                picker.addOnPositiveButtonClickListener {
-                                    date.value = LocalDate.ofEpochDay(it)
-                                }
-                            }
+                            dialogState.show()
                         }
                     )
                 },
                 maxLines = 1,
                 singleLine = true,
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Done
-                ),
-                keyboardActions = KeyboardActions(onDone = {
-                    focusRequester.freeFocus()
-                    keyboardController?.hide()
-                }),
+                readOnly = true,
             )
 
             Button(
                 enabled = saveEnabled,
                 modifier = Modifier
                     .fillMaxWidth()
+                    .focusRequester(buttonFocusRequester)
                     .padding(bottom = 4.dp),
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = MaterialTheme.colors.primary,

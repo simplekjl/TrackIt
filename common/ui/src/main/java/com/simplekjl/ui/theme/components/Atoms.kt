@@ -83,7 +83,7 @@ fun AddDeleteFabButtonPreview() {
 @Composable
 fun AddDeleteFabButton(
     modifier: Modifier = Modifier,
-    onClick: () -> Unit,
+    onClick: () -> Unit = {},
     sheetState: ModalBottomSheetState,
     showModalSheet: MutableState<Boolean>
 ) {

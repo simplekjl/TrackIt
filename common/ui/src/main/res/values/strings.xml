@@ -21,4 +21,7 @@
     <string name="update_weight">Update weight</string>
     <string name="add_new_weight_title">Add new weight</string>
     <string name="save_title">Save</string>
+    <string name="ok_label">Ok</string>
+    <string name="cancel_label">Cancel</string>
+    <string name="date_dd_mm_yyyy_pattern">dd-MM-yyyy</string>
 </resources>

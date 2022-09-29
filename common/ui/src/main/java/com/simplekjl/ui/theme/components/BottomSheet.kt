@@ -57,8 +57,6 @@ import com.simplekjl.ui.theme.base.MaterialTheme
 import com.simplekjl.ui.theme.base.TrackItTheme
 import com.simplekjl.ui.theme.base.TrackItTypography
 import com.simplekjl.ui.theme.clearFocusOnKeyboardDismiss
-import com.vanpra.composematerialdialogs.MaterialDialog
-import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -140,19 +138,11 @@ fun WeightEntryContent(
     val buttonFocusRequester = remember { FocusRequester() }
     val formatter = DateTimeFormatter.ofPattern(stringResource(R.string.date_dd_mm_yyyy_pattern))
     val dialogState = rememberMaterialDialogState()
-
-    MaterialDialog(
-        dialogState = dialogState,
-        buttons = {
-            positiveButton(stringResource(R.string.ok_label))
-            negativeButton(stringResource(R.string.cancel_label))
-        }
-    ) {
-        datepicker { result ->
-            date.value = result
-            buttonFocusRequester.freeFocus()
-        }
+    val dateListener: (LocalDate) -> Unit = {
+        date.value = it
     }
+
+    CalendarDialog(dialogState = dialogState, dateListener = dateListener)
     Surface(
         modifier = modifier
             .wrapContentHeight()

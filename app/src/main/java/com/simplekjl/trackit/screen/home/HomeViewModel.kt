@@ -1,5 +1,3 @@
-@file:OptIn(InternalCoroutinesApi::class)
-
 package com.simplekjl.trackit.screen.home
 
 import androidx.lifecycle.LiveData
@@ -11,7 +9,6 @@ import com.simplekjl.domain.usecase.GetProfileUseCase
 import com.simplekjl.domain.usecase.GetWeightsUseCase
 import com.simplekjl.domain.usecase.UpdateWeightUseCase
 import com.simplekjl.domain.utils.Result
-import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.map
 
 // get first weight in the list of weights
@@ -42,4 +39,8 @@ class HomeViewModel(
             }
         }
     }.asLiveData()
+
+    fun updateWeight(weight: Weight) {
+        updateWeightUseCase(weight)
+    }
 }

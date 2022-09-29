@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalComposeUiApi::class)
+
 package com.simplekjl.trackit.screen.home
 
 import androidx.compose.foundation.layout.Column
@@ -20,6 +22,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.simplekjl.domain.model.Weight
@@ -34,6 +37,7 @@ import com.simplekjl.ui.theme.components.HomeSection
 import com.simplekjl.ui.theme.components.LinearChartProgress
 import com.simplekjl.ui.theme.components.TrackItMainToolbar
 import com.simplekjl.ui.theme.components.WeightDetailsSection
+import com.simplekjl.ui.theme.components.WeightEntryContent
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -50,6 +54,7 @@ fun HomeScreen(
 
     val weightsState = homeViewModel.weights.observeAsState()
     val profile = homeViewModel.profile.observeAsState()
+
     val initialWeight = Weight(0, date = System.currentTimeMillis(), 0.0, null)
     var startWeight by remember { mutableStateOf(initialWeight) }
     var currentWeight by remember { mutableStateOf(initialWeight) }
@@ -63,11 +68,22 @@ fun HomeScreen(
         goalWeight = profile.value?.goalWeight ?: 0.0
     }
 
+    var contentTitle by remember { mutableStateOf(com.simplekjl.ui.R.string.add_new_weight_title) }
+    var buttonActionTitle by remember { mutableStateOf(com.simplekjl.ui.R.string.save_title) }
+    var editionWeight by remember { mutableStateOf(initialWeight) }
+
     BottomSheet(
         modifier = Modifier.clearFocusOnKeyboardDismiss(),
-        weight = initialWeight,
         modalBottomSheetState = sheetState,
-        isSheetOpened = showModalSheet
+        isSheetOpened = showModalSheet,
+        sheetContent = {
+            WeightEntryContent(
+                modifier = Modifier,
+                title = contentTitle,
+                buttonTitle = buttonActionTitle,
+                weightModel = startWeight
+            )
+        }
     ) {
         Scaffold(
             topBar = {
@@ -79,6 +95,8 @@ fun HomeScreen(
             modifier = modifier.fillMaxSize(),
             floatingActionButton = {
                 showModalSheet.value = true
+                contentTitle = com.simplekjl.ui.R.string.add_new_weight_title
+                buttonActionTitle = com.simplekjl.ui.R.string.save_title
                 AddDeleteFabButton(
                     sheetState = sheetState, showModalSheet = showModalSheet
                 )
@@ -100,8 +118,24 @@ fun HomeScreen(
                     WeightDetailsSection(
                         modifier = Modifier,
                         startWeight = startWeight.weight,
+                        startWeightClick = {
+                            contentTitle = com.simplekjl.ui.R.string.update_weight_title
+                            buttonActionTitle = com.simplekjl.ui.R.string.update_title
+                            editionWeight = startWeight
+                        },
                         currentWeight = currentWeight.weight,
-                        goalWeight = goalWeight
+                        currentWeightClick = {
+                            contentTitle = com.simplekjl.ui.R.string.update_weight_title
+                            buttonActionTitle = com.simplekjl.ui.R.string.update_title
+                            editionWeight = currentWeight
+                        },
+                        goalWeight = goalWeight,
+                        goalWeightClick = {
+                            contentTitle = com.simplekjl.ui.R.string.update_weight_title
+                            buttonActionTitle = com.simplekjl.ui.R.string.update_title
+                        },
+                        sheetState = sheetState,
+                        showModalSheet = showModalSheet
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))

@@ -20,6 +20,9 @@ import com.github.mikephil.charting.data.Entry
  * <a href="https://iconscout.com/icons/graph" target="_blank">Graph Icon</a> by <a href="https://iconscout.com/contributors/petras-nargela" target="_blank">Petras Nargėla</a>
  * https://visualpharm.com/free-icons/scale-595b40b85ba036ed117de199
  *
+ * Resize vectors online
+ * https://www.iloveimg.com/
+ *
  */
 object SampleData {
 

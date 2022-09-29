@@ -18,9 +18,10 @@
     <!-- Weight literals -->
     <string name="kg_format">%s kg</string>
     <string name="lb_format">%s lb</string>
-    <string name="update_weight">Update weight</string>
+    <string name="update_weight_title">Update weight</string>
     <string name="add_new_weight_title">Add new weight</string>
     <string name="save_title">Save</string>
+    <string name="update_title">Update</string>
     <string name="ok_label">Ok</string>
     <string name="cancel_label">Cancel</string>
     <string name="date_dd_mm_yyyy_pattern">dd-MM-yyyy</string>

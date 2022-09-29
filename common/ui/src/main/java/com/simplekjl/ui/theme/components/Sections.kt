@@ -8,9 +8,17 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ModalBottomSheetState
+import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,18 +26,29 @@ import androidx.compose.ui.unit.dp
 import com.simplekjl.ui.R
 import com.simplekjl.ui.theme.base.TrackItColors
 import com.simplekjl.ui.theme.base.TrackItTheme
+import kotlinx.coroutines.launch
 import java.util.Locale
 
+@OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
 fun HomeSectionPreview() {
+    val sheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+    )
+
+    val showModalSheet = rememberSaveable {
+        mutableStateOf(false)
+    }
     TrackItTheme {
         HomeSection(titleRes = R.string.app_name) {
             WeightDetailsSection(
                 modifier = Modifier,
                 currentWeight = 80.0,
                 goalWeight = 65.0,
-                startWeight = 90.0
+                startWeight = 90.0,
+                sheetState = sheetState,
+                showModalSheet = showModalSheet
             )
         }
     }
@@ -58,36 +77,53 @@ fun HomeSection(
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
 fun WeightDetailsSectionPreview() {
+    val sheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+    )
+
+    val showModalSheet = rememberSaveable {
+        mutableStateOf(false)
+    }
     TrackItTheme {
         WeightDetailsSection(
             modifier = Modifier,
             startWeight = 90.0,
             currentWeight = 74.0,
-            goalWeight = 70.0
+            goalWeight = 70.0,
+            sheetState = sheetState,
+            showModalSheet = showModalSheet
         )
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun WeightDetailsSection(
     modifier: Modifier,
     startWeight: Double,
-    startWeightClick: (String) -> Unit = {},
+    startWeightClick: () -> Unit = {},
     currentWeight: Double,
-    currentWeightClick: (String) -> Unit = {},
+    currentWeightClick: () -> Unit = {},
     goalWeight: Double,
-    goalWeightClick: (String) -> Unit = {}
+    goalWeightClick: () -> Unit = {},
+    sheetState: ModalBottomSheetState,
+    showModalSheet: MutableState<Boolean>
 ) {
-
+    val scope = rememberCoroutineScope()
     Row(modifier = modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
         WeightValueElement(
             metricNameRes = R.string.weight_start_label,
             weightValue = startWeight,
             colorRes = TrackItColors.mid_blue,
-            onClick = startWeightClick,
+            onClick = {
+                showModalSheet.value = !showModalSheet.value
+                scope.launch { sheetState.show() }
+                startWeightClick.invoke()
+            },
             pluralsRes = R.string.kg_format
         )
         WeightValueElement(
@@ -95,14 +131,22 @@ fun WeightDetailsSection(
             pluralsRes = R.string.kg_format,
             weightValue = currentWeight,
             colorRes = TrackItColors.plum,
-            onClick = currentWeightClick
+            onClick = {
+                showModalSheet.value = !showModalSheet.value
+                scope.launch { sheetState.show() }
+                currentWeightClick.invoke()
+            }
         )
         WeightValueElement(
             metricNameRes = R.string.weight_goal_label,
             pluralsRes = R.string.kg_format,
             weightValue = goalWeight,
             colorRes = TrackItColors.cucumber,
-            onClick = goalWeightClick
+            onClick = {
+                showModalSheet.value = !showModalSheet.value
+                scope.launch { sheetState.show() }
+                goalWeightClick.invoke()
+            }
         )
     }
 }

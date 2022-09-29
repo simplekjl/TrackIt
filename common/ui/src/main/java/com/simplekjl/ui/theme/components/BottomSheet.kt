@@ -66,9 +66,9 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun BottomSheet(
     modifier: Modifier = Modifier,
-    weight: Weight = Weight(0, 100L, 89.0, null),
     modalBottomSheetState: ModalBottomSheetState,
     isSheetOpened: MutableState<Boolean>,
+    sheetContent: @Composable () -> Unit,
     content: @Composable () -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -77,11 +77,7 @@ fun BottomSheet(
         sheetBackgroundColor = MaterialTheme.colors.surface,
         sheetState = modalBottomSheetState,
         sheetContent = {
-            WeightEntryContent(
-                modifier = Modifier,
-                title = R.string.add_new_weight_title,
-                weightModel = weight
-            )
+            sheetContent()
         }
     ) {
         content()
@@ -115,6 +111,7 @@ fun WeightContentPreview() {
         WeightEntryContent(
             modifier = Modifier,
             R.string.add_new_weight_title,
+            R.string.save_title,
             Weight(0, System.currentTimeMillis(), 74.0, null)
         )
     }
@@ -127,6 +124,7 @@ fun WeightContentPreview() {
 fun WeightEntryContent(
     modifier: Modifier,
     @StringRes title: Int,
+    @StringRes buttonTitle: Int,
     weightModel: Weight,
     saveAction: () -> Unit = {},
     saveEnabled: Boolean = true
@@ -263,7 +261,7 @@ fun WeightEntryContent(
                 ),
                 onClick = saveAction
             ) {
-                Text(text = stringResource(R.string.save_title).uppercase())
+                Text(text = stringResource(buttonTitle).uppercase())
             }
         }
     }

@@ -23,7 +23,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.simplekjl.domain.model.Weight
-import com.simplekjl.domain.usecase.NewWeightUseCase
 import com.simplekjl.trackit.R
 import com.simplekjl.ui.theme.SampleData
 import com.simplekjl.ui.theme.base.TrackItColors
@@ -35,7 +34,6 @@ import com.simplekjl.ui.theme.components.HomeSection
 import com.simplekjl.ui.theme.components.LinearChartProgress
 import com.simplekjl.ui.theme.components.TrackItMainToolbar
 import com.simplekjl.ui.theme.components.WeightDetailsSection
-import org.koin.java.KoinJavaComponent.inject
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -49,7 +47,7 @@ fun HomeScreen(
     val showModalSheet = rememberSaveable {
         mutableStateOf(false)
     }
-    val useCase: NewWeightUseCase by inject(NewWeightUseCase::class.java)
+
     val weightsState = homeViewModel.weights.observeAsState()
     val profile = homeViewModel.profile.observeAsState()
     val initialWeight = Weight(0, date = System.currentTimeMillis(), 0.0, null)
@@ -64,6 +62,7 @@ fun HomeScreen(
         }
         goalWeight = profile.value?.goalWeight ?: 0.0
     }
+
     BottomSheet(
         modifier = Modifier.clearFocusOnKeyboardDismiss(),
         weight = initialWeight,

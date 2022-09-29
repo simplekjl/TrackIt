@@ -18,6 +18,7 @@ import com.github.mikephil.charting.data.Entry
  * <a href="https://iconscout.com/icons/body-description" target="_blank">Body Description Icon</a> by <a href="https://iconscout.com/contributors/mark-aventura">IconMark</a> on <a href="https://iconscout.com">IconScout</a>
  * <a href="https://iconscout.com/icons/graph" target="_blank">Graph Icon</a> by <a href="https://iconscout.com/contributors/muhazdinata" target="_blank">Muhazdinata</a>
  * <a href="https://iconscout.com/icons/graph" target="_blank">Graph Icon</a> by <a href="https://iconscout.com/contributors/petras-nargela" target="_blank">Petras Nargėla</a>
+ * https://visualpharm.com/free-icons/scale-595b40b85ba036ed117de199
  *
  */
 object SampleData {

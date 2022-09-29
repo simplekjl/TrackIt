@@ -137,6 +137,7 @@ fun WeightEntryContent(
     val focusRequester = remember { FocusRequester() }
     val buttonFocusRequester = remember { FocusRequester() }
     val formatter = DateTimeFormatter.ofPattern(stringResource(R.string.date_dd_mm_yyyy_pattern))
+
     val dialogState = rememberMaterialDialogState()
     val dateListener: (LocalDate) -> Unit = {
         date.value = it
@@ -187,6 +188,9 @@ fun WeightEntryContent(
                     backgroundColor = Color.Transparent,
                     cursorColor = LocalContentColor.current.copy(alpha = LocalContentAlpha.current)
                 ),
+                trailingIcon = {
+                    Icon(painter = painterResource(id = R.drawable.ic_scale), null)
+                },
                 maxLines = 1,
                 singleLine = true,
                 keyboardOptions = KeyboardOptions.Default.copy(

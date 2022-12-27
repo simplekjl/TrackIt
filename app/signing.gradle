@@ -1,0 +1,19 @@
+
+android {
+    signingConfigs {
+        //We need to sign QA because AppCenter requires a signed app to upload and distribute
+        debug {
+            storeFile file("../keystores/qa.keystore")
+            keyAlias "QAKey"
+            keyPassword "qachoco"
+            storePassword "qachoco"
+        }
+
+        release {
+            storeFile file("../keystores/choco.jks")
+            keyAlias "QGNob2NvL2Nob2Nv"
+            keyPassword "66869e57-27c3-426c-a3e8-0d83e260eaf9"
+            storePassword "d714537a-dc2c-4dd9-9495-42c01b603648"
+        }
+    }
+}

@@ -61,12 +61,7 @@ project.afterEvaluate {
                 '**/data/remote/datasource/*DataSource.*',
                 '**/app/**/ProfileItem.*',
                 '**/common/ui/view/**/*.*',
-                '**/common/ui/form/**/*.*',
-                '**/*StringProvider.*',
-                '**/app/choco/configuration/Env.*',
-                '**/app/choco/common/navigation/LobbyActivityForResult.*',
-                '**/feature/chocolateui/ui/*.*',
-                '**/common/interfaces/**/*.*',
+                '**/common/ui/form/**/*.*'
         ]
 
         final kotlinTree = fileTree(dir: "${buildDir}/tmp/kotlin-classes/qa", excludes: fileFilter)

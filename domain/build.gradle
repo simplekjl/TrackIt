@@ -1,5 +1,5 @@
 apply from: "$rootProject.projectDir/common-library.gradle"
 dependencies {
-    implementation project(':testshared')
+    testImplementation project(':testshared')
     api "androidx.room:room-common:2.4.3"
 }
